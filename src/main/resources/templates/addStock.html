@@ -31,7 +31,7 @@
 					      	<label for="type">
 						    		Realizando operación de 
 					    		</label>
-					    		<p th:if="${movement.type.type}==Input">Ingreso</p>
+					    		<p th:if="${movement.type}==Input">Ingreso</p>
 					    		<input type="hidden" th:field="*{type}" class="form-control" id="type">
 					      </th>
 					      <th scope="col">
@@ -55,11 +55,12 @@
 			  		<select id="selectedPro">
 			  			<option selected>
 			  			</option>
-			  			<option th:each="product : ${movement.products}" 
-			  					th:value="${product.id}"
+			  			<th:block th:each="product : ${movement.products}">
+			  			<option th:value="${product.id}"
 			  					th:text="${product.item} + ' ' + ${product.hero} + ' ' + ${product.brand}">
 			  				
 			  			</option><!-- th:if="${product.units}>0" -->
+			  			</th:block>
 			  		</select>
 			  		<button type="button" class="btn btn-outline-success" id="addPro" disabled>Añadir</button>
 			  		
@@ -73,23 +74,32 @@
 					   	<th scope="col">Unidades</th>
 					   </tr>
 					  </thead>
+					  
 					  <tbody>
-					  	<tr th:each="pro : ${movement.products}" class="idPro">
+					  	<tr th:each="pro, itemStat : *{products}" class="d-none" th:id="'idPro' + ${pro.id}">
 						    <td>
-						    	  <input type="text" th:value="${pro.id}" readonly>
+						    	  <input type="text" th:field="*{products[__${itemStat.index}__].id}" 
+						    	  		 class="form-control form-control-sm" readonly>
 						    	 </td>
 						    	 <td>
-						      <input type="text" value="${pro.item}" readonly> 
+						      <input type="text" th:field="*{products[__${itemStat.index}__].item}"
+						      		 class="form-control form-control-sm" readonly> 
 						    </td>
 						    <td>
-						      <input type="text" value="${pro.hero}" readonly>
+						      <input type="text" th:field="*{products[__${itemStat.index}__].hero}"
+						      	  	 class="form-control form-control-sm" readonly>
 						    </td>
 						    <td>
-						      <input type="text" value="${pro.brand}" readonly>
+						      <input type="text" th:field="*{products[__${itemStat.index}__].brand}"
+						      		 class="form-control form-control-sm" readonly>
 						    </td>
 						    <td>
-						      <input type="text" value="${pro.units}" required>
+						      <input type="number" th:field="*{products[__${itemStat.index}__].units}"
+						      		 class="form-control form-control-sm">
 						    </td>
+						    <!--td>
+						    <button type="button" class="btn btn-sm btn-outline-danger returnBtn">X</button>
+						    </td-->
 					  	</tr>
 					  </tbody>
 			  		</table>
@@ -97,7 +107,8 @@
 				</div>
 				
 				<div class="card-footer">
-				<button type="submit" class="btn btn-outline-success" id="submit" disabled>Guardar</button>
+					<a th:href="@{/emp/{empId}/initMove(empId=${movement.employee.id})}" class="btn btn-outline-success">Cancelar</a>
+					<button type="submit" class="btn btn-outline-success" id="submit">Guardar</button>
 			    </div>
 			</div>
 			
@@ -105,9 +116,7 @@
 		</form>
 	</div>
 </div>
-<script>
-    var productsTo = "[[${movement.products}]]";
-</script>
+
 <script src="../static/resources/js/app.js" th:src="@{/resources/js/app.js}"></script>
 </body>
 </html>

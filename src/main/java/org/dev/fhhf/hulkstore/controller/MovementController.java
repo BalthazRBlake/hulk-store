@@ -1,13 +1,9 @@
 package org.dev.fhhf.hulkstore.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.dev.fhhf.hulkstore.model.Employee;
-import org.dev.fhhf.hulkstore.model.MoveType;
 import org.dev.fhhf.hulkstore.model.Movement;
 import org.dev.fhhf.hulkstore.model.Product;
 import org.dev.fhhf.hulkstore.repository.EmployeeRepo;
@@ -35,26 +31,52 @@ public class MovementController {
 	@Autowired
 	private DateFormaterService dateService;
 	
+	@GetMapping("/all")
+	public String getAllInputMoves(Model model) {
+		model.addAttribute("moves", moveRepo.findAll());
+		return "moves";
+	}
 	@GetMapping("/{empId}/initAdd")
 	public String initAddStock(@PathVariable("empId") int empId, Model model) {
 		
 		Date date = dateService.giveFormat(new Date());		
-		MoveType type = new MoveType("Input");
 		Employee employee = empRepo.findById(empId).get();
-		Movement movement = new Movement(date, type, employee);
+		Movement movement = new Movement(date, "Input", employee);
+		
 		List<Product> products = productRepo.findAll();
+		for(Product p : products) {
+			p.setUnits(0);
+		}
+		
 		movement.setProducts(products);
 		
 		model.addAttribute("movement", movement);
-		//model.addAttribute("productsList", products);
 		model.addAttribute("empId", empId);
 		return "addStock";
 	}
 	
 	@PostMapping("/{empId}/addProducts")
 	public String executeInput(@PathVariable("empId") int empId, Movement movement) {
+		//System.out.println(movement);
+		//System.out.println(movement.getType());
+		List<Product> products = productRepo.findAll();
+		List<Product> addedProducts = movement.getProducts();
+		//System.out.println("Antes   :::   ");
+		//System.out.println(products);
 		
-		System.out.println(movement);
+		for(int i = 0; i < products.size(); i++) {
+			Product p = addedProducts.get(i);
+			
+			if(p.getUnits() != 0 && p.getId() == products.get(i).getId()) {
+				int units = products.get(i).getUnits() + p.getUnits();
+				products.get(i).setUnits(units);
+				productRepo.save(products.get(i));
+			}
+		}
+		
+		//System.out.println("Despues   :::   ");
+		//System.out.println(products);
+		moveRepo.save(movement);
 		return "products";
 	}
 	

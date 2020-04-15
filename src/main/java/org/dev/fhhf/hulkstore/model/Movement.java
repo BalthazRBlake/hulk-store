@@ -28,9 +28,7 @@ public class Movement extends BasicEntity{
     @DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date date;
 	
-	@ManyToOne
-	@JoinColumn(name = "type_id")
-	private MoveType type;
+	private String type;
 	
 	@ManyToOne
 	@JoinColumn(name = "emp_id")
@@ -43,7 +41,7 @@ public class Movement extends BasicEntity{
 		super();
 	}
 
-	public Movement(Date date, MoveType type, Employee employee) {
+	public Movement(Date date, String type, Employee employee) {
 		super();
 		this.date = date;
 		this.type = type;
@@ -63,10 +61,10 @@ public class Movement extends BasicEntity{
 		this.employee = employee;
 	}
 	
-	public MoveType getType() {
+	public String getType() {
 		return type;
 	}
-	public void setType(MoveType type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 	public List<Product> getProducts() {

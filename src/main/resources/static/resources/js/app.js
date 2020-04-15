@@ -1,58 +1,46 @@
 const btnAddPro = document.getElementById('addPro');
 const selectedPro = document.getElementById('selectedPro');
 const productsList = document.getElementById('toAddPro');
-let product;
-let addedProducts=[];
-productsTo = [];
+//const btnReturnPro = document.querySelector('.returnBtn');
 
 loadEventListeners();
 
 function loadEventListeners(){
 	btnAddPro.addEventListener('click', addProduct);
 	selectedPro.addEventListener('change', getItem);
+	//btnReturnPro.addEventListener('click', returnProduct);
 }
 
 function getItem(e){
-	let text = e.target.selectedOptions[0].text;
-	let value = e.target.value;
-	if(value){
+	e.preventDefault();
+	if(e.target.selectedIndex){
 		btnAddPro.disabled = false;
+	}else{
+		btnAddPro.disabled = true;
 	}
-	product = value + " " + text;
-	
-	console.log(productsTo);
 }
 
 function addProduct(e){
 	e.preventDefault();
+
 	btnAddPro.disabled = true;
-	let proArr = product.split(" ");
-	//console.log(proArr);
+	
+	let idProduct = selectedPro.value;
 	selectedPro.remove(selectedPro.selectedIndex);
 	
-	/*productsTo.push({
-		"id":proArr[0],
-		"item":proArr[1],
-		"hero":proArr[2],
-		"brand":proArr[3]
-	});*/
-	
-	/*const row = document.createElement('tr');
-	  row.innerHTML = `
-	    <input type="hidden" value="${proArr[0]}" readonly>
-	    <td>
-	      <input type="text" value="${proArr[1]}" readonly> 
-	    </td>
-	    <td>
-	      <input type="text" value="${proArr[2]}" readonly>
-	    </td>
-	    <td>
-	      <input type="text" value="${proArr[3]}" readonly>
-	    </td>
-	    <td>
-	      <input type="number" th:field="*{product.units}" required>
-	    </td>
-	  `;
-	  
-	  productsList.appendChild(row);*/
+	const addedProduct = document.getElementById('idPro'+idProduct);
+	addedProduct.classList.remove("d-none");
 }
+
+/*function returnProduct(e){
+	e.preventDefault();
+	if(e.target.classList.contains("retrunBtn")){
+		let parentId = e.target.parentElement.parentElement;
+		console.log(parentId);
+	}
+	//parentId.classList.add("d-none");
+	
+	let option = document.createElement("option");
+	option.text = "Kiwi";
+	//x.add(option);
+}*/

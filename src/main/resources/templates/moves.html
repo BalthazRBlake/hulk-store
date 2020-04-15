@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'moves')}">
+
+<body>
+
+<div class="card text-white bg-success">
+	<h4 class="card-header">
+        ...
+	</h4>
+  	<div class="card-body">
+
+			<th:block th:each = "move : ${moves}">
+				
+				  <div class="card text-white bg-dark">
+				    <div class="card-body">
+				      <h4 class="card-title" th:text="${move}"></h4>
+				    </div>
+				    <div class="card-footer">
+				        
+				    </div>
+				  </div>
+
+			</th:block>
+			
+	</div>
+</div>
+
+</body>
+</html>

@@ -5,9 +5,6 @@ INSERT INTO products VALUES (4, 'Gafas', 'DC', 'WonderWoman', 25);
 INSERT INTO products VALUES (5, 'Labial', 'Marvel', 'BlackWidow', 60);
 INSERT INTO products VALUES (6, 'Bolso', 'DC', 'HarleyQuinn', 55);
 
-INSERT INTO move_types VALUES (1, 'Input');
-INSERT INTO move_types VALUES (2, 'Output');
-
 INSERT INTO employees VALUES (1, 'Susana');
 INSERT INTO employees VALUES (2, 'Pedro');
 INSERT INTO employees VALUES (3, 'Carlos');
