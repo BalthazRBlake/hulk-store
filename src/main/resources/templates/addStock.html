@@ -7,61 +7,107 @@
 
 <div class="card text-white bg-success">
 	<h4 class="card-header">
-        ...
+        Ingreso de Productos
 	</h4>
   	<div class="card-body">
 		<form th:Object="${movement}" th:action="@{/move/{empId}/addProducts(empId=${empId})}" method="POST">
-			<th:block th:each="product : ${products}">
+		    
 			<div class="card text-white bg-dark">
-				<h4 class="card-header">
-			        P
-				</h4>
+				
+				<div class="card-header">
+				
+					<table class="table table-dark table-hover">
+					  <thead>
+					    <tr>
+					      <th scope="col">
+					      <label for="emp">
+						    		Emplead@
+					    		</label>
+					    		<p><span th:text="${movement.employee.firstName}"></span>
+						    		con id <span th:text="${movement.employee.id}"></span></p>
+					    		<input type="hidden" th:field="*{employee}" class="form-control" id="emp">
+					      </th>
+					      <th scope="col">
+					      	<label for="type">
+						    		Realizando operación de 
+					    		</label>
+					    		<p th:if="${movement.type.type}==Input">Ingreso</p>
+					    		<input type="hidden" th:field="*{type}" class="form-control" id="type">
+					      </th>
+					      <th scope="col">
+					      <label for="date">
+					      	Fecha
+					      </label>
+					      	<input type="date" th:field="*{date}" class="form-control form-control-sm" id="date">
+					      </th>					      	
+					      <th>
+					      	
+					      </th>
+					    </tr>
+					  </thead>
+					  <tbody></tbody>
+					</table>
+					
+			    </div>
+			    
 			  	<div class="card-body">
-			  	<div class="form-row">
-					<div class="form-group col-md-3">
-					    <label for="typeProduct">Artículo</label>
-					    <select class="form-control form-control-sm" id="typeProduct">
-					      <option>Camiseta</option>
-					      <option>Vaso</option>
-					      <option>Gorra</option>
-					      <option>Gafas</option>
-					      <option>Bolso</option>
-					      <option>Labial</option>
-					    </select>
-					</div>
-					<div class="form-group col-md-3">
-					    <label for="brand">Marca</label>
-					    <select class="form-control form-control-sm" id="brand">
-					      <option>Marvel</option>
-					      <option>DC</option>
-					      <option>Alternativa</option>
-					    </select>
-					</div>
-					<div class="form-group col-md-3">
-					    <label for="typeProduct">Heroe</label>
-					    <select class="form-control form-control-sm" id="typeProduct">
-					      <option>Hulk</option>
-					      <option>IronMan</option>
-					      <option>BlackWidow</option>
-					      <option>Batman</option>
-					      <option>HarleyQin</option>
-					      <option>WonderWoman</option>
-					    </select>
-					</div>
+			  		Artículo
+			  		<select id="selectedPro">
+			  			<option selected>
+			  			</option>
+			  			<option th:each="product : ${movement.products}" 
+			  					th:value="${product.id}"
+			  					th:text="${product.item} + ' ' + ${product.hero} + ' ' + ${product.brand}">
+			  				
+			  			</option><!-- th:if="${product.units}>0" -->
+			  		</select>
+			  		<button type="button" class="btn btn-outline-success" id="addPro" disabled>Añadir</button>
+			  		
+			  		<table class="table table-dark table-hover" id="toAddPro">
+					  <thead>
+					   <tr>
+					   	<th scope="col">#</th>
+					   	<th scope="col">Item</th>
+					   	<th scope="col">Hero</th>
+					   	<th scope="col">Brand</th>
+					   	<th scope="col">Unidades</th>
+					   </tr>
+					  </thead>
+					  <tbody>
+					  	<tr th:each="pro : ${movement.products}" class="idPro">
+						    <td>
+						    	  <input type="text" th:value="${pro.id}" readonly>
+						    	 </td>
+						    	 <td>
+						      <input type="text" value="${pro.item}" readonly> 
+						    </td>
+						    <td>
+						      <input type="text" value="${pro.hero}" readonly>
+						    </td>
+						    <td>
+						      <input type="text" value="${pro.brand}" readonly>
+						    </td>
+						    <td>
+						      <input type="text" value="${pro.units}" required>
+						    </td>
+					  	</tr>
+					  </tbody>
+			  		</table>
+			  		
 				</div>
-				</div>
+				
 				<div class="card-footer">
-			      <a href="#"
-			           class="btn btn-outline-danger">X</a>
-		          <a href="#"
-			           class="btn btn-outline-success">+</a>
+				<button type="submit" class="btn btn-outline-success" id="submit" disabled>Guardar</button>
 			    </div>
 			</div>
-			</th:block>
+			
 			
 		</form>
 	</div>
 </div>
-
+<script>
+    var productsTo = "[[${movement.products}]]";
+</script>
+<script src="../static/resources/js/app.js" th:src="@{/resources/js/app.js}"></script>
 </body>
 </html>

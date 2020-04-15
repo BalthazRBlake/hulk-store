@@ -1,9 +1,9 @@
-INSERT INTO products VALUES (1, 'Camiseta', 'Marvle', 'Hulk', 50);
-INSERT INTO products VALUES (2, 'Camiseta', 'Marvle', 'IronMan', 30);
+INSERT INTO products VALUES (1, 'Camiseta', 'Marvel', 'Hulk', 50);
+INSERT INTO products VALUES (2, 'Camiseta', 'Marvel', 'IronMan', 30);
 INSERT INTO products VALUES (3, 'Gorra', 'DC', 'Batman', 40);
 INSERT INTO products VALUES (4, 'Gafas', 'DC', 'WonderWoman', 25);
-INSERT INTO products VALUES (5, 'Labial', 'Marvle', 'BlackWidow', 60);
-INSERT INTO products VALUES (6, 'Bolso', 'DC', 'HarleyQuin', 55);
+INSERT INTO products VALUES (5, 'Labial', 'Marvel', 'BlackWidow', 60);
+INSERT INTO products VALUES (6, 'Bolso', 'DC', 'HarleyQuinn', 55);
 
 INSERT INTO move_types VALUES (1, 'Input');
 INSERT INTO move_types VALUES (2, 'Output');

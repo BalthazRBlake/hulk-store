@@ -17,6 +17,15 @@ public class MoveType extends BasicEntity{
 	@NotEmpty
 	private String type;
 
+	public MoveType() {
+		super();
+	}
+
+	public MoveType(@NotEmpty String type) {
+		super();
+		this.type = type;
+	}
+
 	public String getType() {
 		return type;
 	}

@@ -25,7 +25,7 @@ public class Movement extends BasicEntity{
 	private static final long serialVersionUID = 8037140404143139687L;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date date;
 	
 	@ManyToOne
@@ -38,6 +38,17 @@ public class Movement extends BasicEntity{
 	
 	@ManyToMany(mappedBy = "movements")
 	private List<Product> products = new ArrayList<>();
+	
+	public Movement() {
+		super();
+	}
+
+	public Movement(Date date, MoveType type, Employee employee) {
+		super();
+		this.date = date;
+		this.type = type;
+		this.employee = employee;
+	}
 	
 	public Date getDate() {
 		return date;
