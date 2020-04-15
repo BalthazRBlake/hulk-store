@@ -11,7 +11,7 @@ CREATE TABLE products (
 	hero VARCHAR_IGNORECASE(35) NOT NULL,
 	units INTEGER NOT NULL
 );
-CREATE INDEX products_name ON products (name);
+CREATE INDEX products_item ON products (item);
 
 CREATE TABLE employees(
 	id INTEGER IDENTITY PRIMARY KEY,

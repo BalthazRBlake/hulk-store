@@ -8,7 +8,7 @@ public interface ProductService {
 
 	List<Product> findAllProducts();
 	
-	Product findProductByName(String productName);
+	Product findProductByItem(String item);
 	
 	//Save New or Update
 	Product saveProduct(Product product);
