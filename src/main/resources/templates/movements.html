@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'movements')}">
+
+<body>
+
+<div class="card text-white bg-success">
+ 	<h4 class="card-header">
+        ¡¡¡Bienvenid@ <span th:text="${employee.firstName}"></span>!!!
+	</h4>
+  	<div class="card-body">
+  	<h5>Elija la operación que desea realizar</h5>
+  	
+		<div class="row row-cols-1 row-cols-md-4">
+			<div class="col mb-3">
+			  <div class="card text-white bg-dark text-center h-100">
+			  	<h4 class="card-header"></h4>
+			    <div class="card-body">
+			      <a th:href="@{/move/{empId}/initAdd(empId=${employee.id})}"
+			           class="btn btn-outline-success">Agregar a Stock</a>
+			    </div>
+			    <div class="card-footer"></div>
+			  </div>
+			</div>
+			<div class="col mb-3">
+			  <div class="card text-white bg-dark text-center h-100">
+			  	<h4 class="card-header"></h4>
+			    <div class="card-body">
+			      <a th:href="@{/move/{empId}/(empId=${employee.id})}"
+			           class="btn btn-outline-success">Vender</a>
+			    </div>
+			    <div class="card-footer"></div>
+			  </div>
+			</div>
+			<div class="col mb-3">
+			  <div class="card text-white bg-dark text-center h-100">
+			  	<h4 class="card-header"></h4>
+			    <div class="card-body">
+			      <a th:href="@{/move/{empId}/(empId=${employee.id})}"
+			           class="btn btn-outline-success">Ver Stock</a>
+			    </div>
+			    <div class="card-footer"></div>
+			  </div>
+			</div>
+			<div class="col mb-3">
+			  <div class="card text-white bg-dark text-center h-100">
+			  	<h4 class="card-header"></h4>
+			    <div class="card-body">
+			      <a th:href="@{/emp/all}"
+			           class="btn btn-outline-success">Cerrar</a>
+			    </div>
+			    <div class="card-footer"></div>
+			  </div>
+			</div>
+		</div>
+		
+	</div>
+</div>
+
+</body>
+</html>
