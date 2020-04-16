@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.when;
-
 import static org.hamcrest.Matchers.*;
+
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -42,7 +42,7 @@ public class EmployeeControllerTest {
 		Employee employee3 = new Employee(3, "Camilo");
 		
 		when(empService.findAllEmployees())
-        .thenReturn(Arrays.asList(employee1, employee2, employee3));
+        		.thenReturn(Arrays.asList(employee1, employee2, employee3));
 		
 		mockMvc.perform(get("/emp/all"))
 		        .andExpect(status().isOk())

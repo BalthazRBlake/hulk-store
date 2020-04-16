@@ -22,13 +22,13 @@ public class Product extends BasicEntity{
 	
 	@NotEmpty
 	private String item;
-	
-	@NotEmpty
-	private String brand;
-	
+
 	@NotEmpty
 	private String hero;
 	
+	@NotEmpty
+	private String brand;
+
 	private Integer units;
 	
 	@ManyToMany(mappedBy = "products")
@@ -38,6 +38,14 @@ public class Product extends BasicEntity{
 		super();
 	}
 	
+	public Product(Integer id, @NotEmpty String item, @NotEmpty String hero, @NotEmpty String brand, Integer units) {
+		super(id);
+		this.item = item;
+		this.hero = hero;
+		this.brand = brand;
+		this.units = units;
+	}
+
 	public String getItem() {
 		return item;
 	}
