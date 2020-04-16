@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 public class DateFormaterService {
 
 	public Date giveFormat(Date date){
+		
 		try {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		String dateString = format.format(date);
@@ -17,7 +18,7 @@ public class DateFormaterService {
 		} catch(ParseException ex) {
 			System.out.println("Bad Date Format   :::   ");
 		}
-		//System.out.println("DATE   :::   " + date);
+		
 		return date;
 	}
 }

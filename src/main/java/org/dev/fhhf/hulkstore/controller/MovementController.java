@@ -33,11 +33,16 @@ public class MovementController {
 	@Autowired
 	private DateFormaterService dateService;
 
+	/**
+	 * Pone loas atributos en el modelo, transactions extrae la información
+	 * detallada de cada movimiento
+	 */
 	@GetMapping("/{empId}/all")
-	public String getAllInputMoves(@PathVariable("empId") int empId, Model model) {
+	public String getAllMovements(@PathVariable("empId") int empId, Model model) {
 
 		List<Movement> movements = moveRepo.findAll();
 		List<List<String>> transactions = new ArrayList<>();
+		
 		for (Movement m : movements) {
 			transactions.add(Arrays.asList(m.getMovedUnits().split(",")));
 		}
@@ -50,11 +55,8 @@ public class MovementController {
 
 	/**
 	 * Prepara el modelo para iniciar una operacion
-	 * 
-	 * @param empId
-	 * @param type
-	 * @param model
-	 * @return
+	 * @param empId identidifica al empleado en sesion
+	 * @param type identifica el tipo de operacion
 	 */
 	@GetMapping("/{empId}/init/{moveType}")
 	public String initAddStock(@PathVariable("empId") int empId, @PathVariable("moveType") String type, Model model) {
@@ -78,8 +80,11 @@ public class MovementController {
 		return "addStock";
 	}
 
+	/**
+	 * 
+	 */
 	@PostMapping("/{empId}/{moveType}/Products")
-	public String executeInput(@PathVariable("empId") int empId, @PathVariable("moveType") String type,
+	public String executeOperation(@PathVariable("empId") int empId, @PathVariable("moveType") String type,
 			Movement movement) {
 
 		List<Product> addedProducts = (List<Product>) movement.getProducts();
@@ -88,6 +93,7 @@ public class MovementController {
 
 		for (Product aP : addedProducts) {
 			if (aP.getUnits() != 0) {
+				
 				Product pro = productRepo.findById(aP.getId()).get();
 
 				movedUnits = movedUnits
