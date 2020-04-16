@@ -17,14 +17,14 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeService empService;
-	
+
 	@GetMapping("/all")
 	public String getAllEmployees(Model model) {
 		List<Employee> employees = empService.findAllEmployees();
 		model.addAttribute("employees", employees);
 		return "employees";
 	}
-	
+
 	@GetMapping("{empId}/initMove")
 	public String initMovement(@PathVariable("empId") int empId, Model model) {
 		Employee employee = empService.findEmployeeById(empId);

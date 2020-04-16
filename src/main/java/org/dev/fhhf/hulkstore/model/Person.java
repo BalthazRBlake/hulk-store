@@ -15,6 +15,15 @@ public class Person extends BasicEntity {
 	@NotEmpty
  	private String firstName;
 
+	public Person() {
+		super();
+	}
+
+	public Person(Integer id, @NotEmpty String firstName) {
+		super(id);
+		this.firstName = firstName;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}

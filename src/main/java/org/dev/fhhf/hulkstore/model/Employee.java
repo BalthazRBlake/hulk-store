@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 import org.springframework.core.style.ToStringCreator;
 /**
@@ -18,6 +19,14 @@ public class Employee extends Person{
 
 	private static final long serialVersionUID = -2544890317834735185L;
 	
+	public Employee() {
+		super();
+	}
+	
+	public Employee(Integer id, @NotEmpty String firstName) {
+		super(id, firstName);
+	}
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
 	private List<Movement> movements = new ArrayList<>();
 	

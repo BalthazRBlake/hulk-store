@@ -17,7 +17,7 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
-	
+
 	@GetMapping("{empId}/all")
 	public String getProductByName(@PathVariable("empId") int empId, Model model) {
 		List<Product> products = productService.findAllProducts();
