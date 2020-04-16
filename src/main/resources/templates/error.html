@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org"
+	th:replace="~{fragments/layout :: layout (~{::body},'employees')}">
+
+<body>
+
+	<div class="card text-white bg-danger">
+		<h4 class="card-header">¡Ups!</h4>
+		<div class="card-body">
+			<div class="card text-white bg-dark">
+				<div class="card-header"></div>
+				<div class="card-body">
+					<h4 class="card-title">
+						Error <span th:text="${error}"></span>
+					</h4>
+					<div th:if="${error}==404" class="alert alert-warning">
+						¡La dirección a la que navegaste no existe!
+					</div>
+					<div th:if="${error}==500" class="alert alert-dark">
+						¡Lo sentimos, algo salió mal!
+					</div>
+				</div>
+				<div class="card-footer"></div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

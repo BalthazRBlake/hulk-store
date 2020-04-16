@@ -1,128 +1,114 @@
 <!DOCTYPE html>
 
 <html xmlns:th="https://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout (~{::body},'addStock')}">
+	th:replace="~{fragments/layout :: layout (~{::body},'addStock')}">
 
 <body>
 
-<div class="card text-white bg-success">
-	<h4 class="card-header">
-        Ingreso de Productos
-	</h4>
-  	<div class="card-body">
-		<form th:Object="${movement}" method="POST"
-			  th:action="@{/move/{empId}/{moveType}/Products(empId=${empId}, moveType=${movement.type})}">
-		    
-			<div class="card text-white bg-dark">
-				
-				<div class="card-header">
-				
-					<table class="table table-dark table-hover">
-					  <thead>
-					    <tr>
-					      <th scope="col">
-					      <label for="emp">
-						    		Emplead@
-					    		</label>
-					    		<p><span th:text="${movement.employee.firstName}"></span>
-						    		con id <span th:text="${movement.employee.id}"></span></p>
-					    		<input type="hidden" th:field="*{employee}" class="form-control" id="emp">
-					      </th>
-					      <th scope="col">
-					      	<label for="type">
-						    		Realizando operación de 
-					    		</label>
-					    		<p>
-					    			<span class="badge badge-primary"
-					    				th:if="${movement.type}==Input">Ingreso</span>
-						    		<span class="badge badge-warning"
-						    			th:if="${movement.type}==Output">Venta</span>
-					    		</p>
-					    		<input type="hidden" th:field="*{type}" class="form-control" id="type">
-					      </th>
-					      <th scope="col">
-					      <label for="date">
-					      	Fecha
-					      </label>
-					      	<input type="date" th:field="*{date}" class="form-control form-control-sm" id="date">
-					      </th>					      	
-					      <th>
-					      	
-					      </th>
-					    </tr>
-					  </thead>
-					  <tbody></tbody>
-					</table>
-					
-			    </div>
-			    
-			  	<div class="card-body">
-			  		Artículo
-			  		<select id="selectedPro">
-			  			<option selected>
-			  			</option>
-			  			<th:block th:each="product : ${movement.products}">
-			  			<option th:value="${product.id}"
-			  					th:text="${product.item} + ' ' + ${product.hero} + ' ' + ${product.brand}">
-			  				
-			  			</option><!-- th:if="${product.units}>0" -->
-			  			</th:block>
-			  		</select>
-			  		<button type="button" class="btn btn-outline-success" id="addPro" disabled>Añadir</button>
-			  		
-			  		<table class="table table-dark table-hover" id="toAddPro">
-					  <thead>
-					   <tr>
-					   	<th scope="col">#</th>
-					   	<th scope="col">Item</th>
-					   	<th scope="col">Hero</th>
-					   	<th scope="col">Brand</th>
-					   	<th scope="col">Unidades</th>
-					   </tr>
-					  </thead>
-					  
-					  <tbody>
-					  	<tr th:each="pro, itemStat : *{products}" class="d-none" th:id="'idPro' + ${pro.id}">
-						    <td>
-						    	  <input type="text" th:field="*{products[__${itemStat.index}__].id}" 
-						    	  		 class="form-control form-control-sm" readonly>
-						    	 </td>
-						    	 <td>
-						      <input type="text" th:field="*{products[__${itemStat.index}__].item}"
-						      		 class="form-control form-control-sm" readonly> 
-						    </td>
-						    <td>
-						      <input type="text" th:field="*{products[__${itemStat.index}__].hero}"
-						      	  	 class="form-control form-control-sm" readonly>
-						    </td>
-						    <td>
-						      <input type="text" th:field="*{products[__${itemStat.index}__].brand}"
-						      		 class="form-control form-control-sm" readonly>
-						    </td>
-						    <td>
-						      <input type="number" th:field="*{products[__${itemStat.index}__].units}"
-						      		 class="form-control form-control-sm">
-						    </td>
-						    <!--td>
+	<div class="card text-white bg-success">
+		<h4 class="card-header">Ingreso de Productos</h4>
+		<div class="card-body">
+			<form th:Object="${movement}" method="POST"
+				th:action="@{/move/{empId}/{moveType}/Products(empId=${empId}, moveType=${movement.type})}">
+
+				<div class="card text-white bg-dark">
+
+					<div class="card-header">
+
+						<table class="table table-dark table-hover">
+							<thead>
+								<tr>
+									<th scope="col"><label for="emp"> Emplead@ </label>
+										<p>
+											<span th:text="${movement.employee.firstName}"></span> con id
+											<span th:text="${movement.employee.id}"></span>
+										</p> <input type="hidden" th:field="*{employee}"
+										class="form-control" id="emp"></th>
+									<th scope="col"><label for="type"> Realizando
+											operación de </label>
+										<p>
+											<span class="badge badge-primary"
+												th:if="${movement.type}==Input">Ingreso</span> <span
+												class="badge badge-warning" th:if="${movement.type}==Output">Venta</span>
+										</p> <input type="hidden" th:field="*{type}" class="form-control"
+										id="type"></th>
+									<th scope="col"><label for="date"> Fecha </label> <input
+										type="date" th:field="*{date}"
+										class="form-control form-control-sm" id="date"></th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+
+					</div>
+
+					<div class="card-body">
+						Artículo <select id="selectedPro">
+							<option selected></option>
+							<th:block th:each="product : ${movement.products}">
+								<option th:value="${product.id}"
+									th:text="${product.item} + ' ' + ${product.hero} + ' ' + ${product.brand}">
+
+								</option>
+								<!-- th:if="${product.units}>0" -->
+							</th:block>
+						</select>
+						<button type="button" class="btn btn-outline-success" id="addPro"
+							disabled>Añadir</button>
+
+						<table class="table table-dark table-hover" id="toAddPro">
+							<thead>
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">Item</th>
+									<th scope="col">Hero</th>
+									<th scope="col">Brand</th>
+									<th scope="col">Unidades</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<tr th:each="pro, itemStat : *{products}" class="d-none"
+									th:id="'idPro' + ${pro.id}">
+									<td><input type="text"
+										th:field="*{products[__${itemStat.index}__].id}"
+										class="form-control form-control-sm" readonly></td>
+									<td><input type="text"
+										th:field="*{products[__${itemStat.index}__].item}"
+										class="form-control form-control-sm" readonly></td>
+									<td><input type="text"
+										th:field="*{products[__${itemStat.index}__].hero}"
+										class="form-control form-control-sm" readonly></td>
+									<td><input type="text"
+										th:field="*{products[__${itemStat.index}__].brand}"
+										class="form-control form-control-sm" readonly></td>
+									<td><input type="number"
+										th:field="*{products[__${itemStat.index}__].units}"
+										class="form-control form-control-sm"></td>
+									<!--td>
 						    <button type="button" class="btn btn-sm btn-outline-danger returnBtn">X</button>
 						    </td-->
-					  	</tr>
-					  </tbody>
-			  		</table>
-			  		
-				</div>
-				
-				<div class="card-footer">
-					<a th:href="@{/emp/{empId}/initMove(empId=${movement.employee.id})}" class="btn btn-outline-danger">Cancelar</a>
-					<button type="submit" class="btn btn-outline-success" id="submit">Guardar</button>
-			    </div>
-			</div>
-			
-			
-		</form>
-	</div>
-</div>
+								</tr>
+							</tbody>
+						</table>
 
-<script src="../static/resources/js/app.js" th:src="@{/resources/js/app.js}"></script>
+					</div>
+
+					<div class="card-footer">
+						<a
+							th:href="@{/emp/{empId}/initMove(empId=${movement.employee.id})}"
+							class="btn btn-outline-danger">Cancelar</a>
+						<button type="submit" class="btn btn-outline-success" id="submit">Guardar</button>
+					</div>
+				</div>
+
+
+			</form>
+		</div>
+	</div>
+
+	<script src="../static/resources/js/app.js"
+		th:src="@{/resources/js/app.js}"></script>
 </body>
 </html>

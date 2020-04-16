@@ -1,34 +1,33 @@
 <!DOCTYPE html>
 
 <html xmlns:th="https://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout (~{::body},'employees')}">
+	th:replace="~{fragments/layout :: layout (~{::body},'employees')}">
 
 <body>
 
-<div class="card text-white bg-success">
-	<h4 class="card-header">
-        Para iniciar haga click en el botón con su nombre
-	</h4>
-  	<div class="card-body">
-		<div class="row row-cols-1 row-cols-md-3">
-		
-			<th:block th:each = "employee : ${employees}">
-				<div class="col mb-4">
-				  <div class="card text-white bg-dark h-100">
-				    <div class="card-body">
-				      <h4 class="card-title" th:text="${employee.firstName}"></h4>
-				    </div>
-				    <div class="card-footer">
-				        <a th:href="@{/emp/{empId}/initMove(empId=${employee.id})}"
-				           class="btn btn-outline-light">Ejecutar Movimiento</a>
-				    </div>
-				  </div>
-				</div>
-			</th:block>
-			
+	<div class="card text-white bg-success">
+		<h4 class="card-header">Para iniciar haga click en el botón con
+			su nombre</h4>
+		<div class="card-body">
+			<div class="row row-cols-1 row-cols-md-3">
+
+				<th:block th:each="employee : ${employees}">
+					<div class="col mb-4">
+						<div class="card text-white bg-dark h-100">
+							<div class="card-body">
+								<h4 class="card-title" th:text="${employee.firstName}"></h4>
+							</div>
+							<div class="card-footer">
+								<a th:href="@{/emp/{empId}/initMove(empId=${employee.id})}"
+									class="btn btn-outline-light">Ejecutar Movimiento</a>
+							</div>
+						</div>
+					</div>
+				</th:block>
+
+			</div>
 		</div>
 	</div>
-</div>
 
 </body>
 </html>
