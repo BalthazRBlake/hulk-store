@@ -10,7 +10,8 @@
         Ingreso de Productos
 	</h4>
   	<div class="card-body">
-		<form th:Object="${movement}" th:action="@{/move/{empId}/addProducts(empId=${empId})}" method="POST">
+		<form th:Object="${movement}" method="POST"
+			  th:action="@{/move/{empId}/{moveType}/Products(empId=${empId}, moveType=${movement.type})}">
 		    
 			<div class="card text-white bg-dark">
 				
@@ -31,7 +32,12 @@
 					      	<label for="type">
 						    		Realizando operación de 
 					    		</label>
-					    		<p th:if="${movement.type}==Input">Ingreso</p>
+					    		<p>
+					    			<span class="badge badge-primary"
+					    				th:if="${movement.type}==Input">Ingreso</span>
+						    		<span class="badge badge-warning"
+						    			th:if="${movement.type}==Output">Venta</span>
+					    		</p>
 					    		<input type="hidden" th:field="*{type}" class="form-control" id="type">
 					      </th>
 					      <th scope="col">
@@ -107,7 +113,7 @@
 				</div>
 				
 				<div class="card-footer">
-					<a th:href="@{/emp/{empId}/initMove(empId=${movement.employee.id})}" class="btn btn-outline-success">Cancelar</a>
+					<a th:href="@{/emp/{empId}/initMove(empId=${movement.employee.id})}" class="btn btn-outline-danger">Cancelar</a>
 					<button type="submit" class="btn btn-outline-success" id="submit">Guardar</button>
 			    </div>
 			</div>
