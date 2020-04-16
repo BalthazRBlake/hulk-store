@@ -35,13 +35,16 @@ public class MovementController {
 	
 	@GetMapping("/{empId}/all")
 	public String getAllInputMoves(@PathVariable("empId") int empId, Model model) {
+		
 		List<Movement> movements = moveRepo.findAll();
 		List<List<String>> transactions = new ArrayList<>();
 		for(Movement m : movements) {
 			transactions.add(Arrays.asList(m.getMovedUnits().split(",")));
 		}
+		
 		model.addAttribute("transactions", transactions);
 		model.addAttribute("moves", movements);
+		model.addAttribute("empId", empId);
 		return "moves";
 	}
 	

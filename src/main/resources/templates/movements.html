@@ -18,7 +18,7 @@
 			  	<h4 class="card-header"></h4>
 			    <div class="card-body">
 			      <a th:href="@{/move/{empId}/init/{moveType}(empId=${employee.id}, moveType=Input)}"
-			           class="btn btn-outline-primary">Agregar a Stock</a>
+			           class="btn btn-outline-primary">Compra de productos</a>
 			    </div>
 			    <div class="card-footer"></div>
 			  </div>
@@ -28,7 +28,7 @@
 			  	<h4 class="card-header"></h4>
 			    <div class="card-body">
 			      <a th:href="@{/move/{empId}/init/{moveType}(empId=${employee.id}, moveType=Output)}"
-			           class="btn btn-outline-warning">Vender</a>
+			           class="btn btn-outline-warning">Venta de productos</a>
 			    </div>
 			    <div class="card-footer"></div>
 			  </div>
@@ -38,7 +38,37 @@
 			  	<h4 class="card-header"></h4>
 			    <div class="card-body">
 			      <a th:href="@{/stock/{empId}/all(empId=${employee.id})}"
-			           class="btn btn-outline-success">Ver Stock</a>
+			           class="btn btn-outline-success">Ver Stock de productos</a>
+			    </div>
+			    <div class="card-footer"></div>
+			  </div>
+			</div>
+			<div class="col mb-3">
+			  <div class="card text-white bg-dark text-center h-100">
+			  	<h4 class="card-header"></h4>
+			    <div class="card-body">
+			      <a th:href="@{/move/{empId}/all(empId=${employee.id})}"
+			           class="btn btn-outline-light">Historial de Movimientos</a>
+			    </div>
+			    <div class="card-footer"></div>
+			  </div>
+			</div>
+			<div class="col mb-3">
+			  <div class="card text-white bg-dark text-center h-100">
+			  	<h4 class="card-header"></h4>
+			    <div class="card-body">
+			      <a href="#"
+			           class="btn btn-outline-primary">Agregar producto al Stock</a>
+			    </div>
+			    <div class="card-footer"></div>
+			  </div>
+			</div>
+			<div class="col mb-3">
+			  <div class="card text-white bg-dark text-center h-100">
+			  	<h4 class="card-header"></h4>
+			    <div class="card-body">
+			      <a href="#"
+			           class="btn btn-outline-warning">Eliminar producto del Stock</a>
 			    </div>
 			    <div class="card-footer"></div>
 			  </div>
