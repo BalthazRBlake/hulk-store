@@ -1,4 +1,4 @@
-DROP TABLE product_movements IF EXISTS;
+DROP TABLE product_movement IF EXISTS;
 DROP TABLE products IF EXISTS;
 DROP TABLE movements IF EXISTS;
 DROP TABLE employees IF EXISTS;
@@ -20,6 +20,7 @@ CREATE TABLE employees(
 CREATE TABLE movements (
 	id INTEGER IDENTITY PRIMARY KEY,
 	date DATE,
+	moved_units LONGVARCHAR NOT NULL,
 	type VARCHAR(35) NOT NULL,
 	emp_id INTEGER NOT NULL
 );

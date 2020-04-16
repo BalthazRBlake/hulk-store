@@ -1,5 +1,6 @@
 package org.dev.fhhf.hulkstore.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class MovementController {
 	
 	@GetMapping("/all")
 	public String getAllInputMoves(Model model) {
+		System.out.println(moveRepo.findAll());
 		model.addAttribute("moves", moveRepo.findAll());
 		return "moves";
 	}
@@ -43,9 +45,11 @@ public class MovementController {
 		Employee employee = empRepo.findById(empId).get();
 		Movement movement = new Movement(date, "Input", employee);
 		
-		List<Product> products = productRepo.findAll();
-		for(Product p : products) {
+		List<Product> products = new ArrayList<>();
+		
+		for(Product p : productRepo.findAll()) {
 			p.setUnits(0);
+			products.add(p);
 		}
 		
 		movement.setProducts(products);
@@ -57,27 +61,28 @@ public class MovementController {
 	
 	@PostMapping("/{empId}/addProducts")
 	public String executeInput(@PathVariable("empId") int empId, Movement movement) {
-		//System.out.println(movement);
-		//System.out.println(movement.getType());
-		List<Product> products = productRepo.findAll();
-		List<Product> addedProducts = movement.getProducts();
-		//System.out.println("Antes   :::   ");
-		//System.out.println(products);
+
+		List<Product> addedProducts = (List<Product>) movement.getProducts();
+		String movedUnits = "";
+		movement.setProducts(new ArrayList<Product>());
 		
-		for(int i = 0; i < products.size(); i++) {
-			Product p = addedProducts.get(i);
-			
-			if(p.getUnits() != 0 && p.getId() == products.get(i).getId()) {
-				int units = products.get(i).getUnits() + p.getUnits();
-				products.get(i).setUnits(units);
-				productRepo.save(products.get(i));
+		System.out.println(addedProducts);
+		
+		for(Product aP : addedProducts){
+			if(aP.getUnits() != 0) {
+				Product pro = productRepo.findById(aP.getId()).get();
+				
+				movedUnits = movedUnits.concat(pro.getId() +" "+ pro.getUnits() +" "+ aP.getUnits());
+				
+				int units = pro.getUnits() + aP.getUnits();
+				pro.setUnits(units);
+				movement.addProduct(pro);
 			}
 		}
-		
-		//System.out.println("Despues   :::   ");
-		//System.out.println(products);
+		//System.out.println(movement.getProducts());
+		movement.setMovedUnits(movedUnits);
 		moveRepo.save(movement);
-		return "products";
+		return "redirect:/move/all";
 	}
 	
 }

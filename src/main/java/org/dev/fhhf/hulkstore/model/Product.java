@@ -3,11 +3,7 @@ package org.dev.fhhf.hulkstore.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
@@ -35,13 +31,12 @@ public class Product extends BasicEntity{
 	
 	private Integer units;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "product_movement",
-    		joinColumns = @JoinColumn(name = "product_id"), 
-            inverseJoinColumns = @JoinColumn(name = "movement_id")
-        )
+	@ManyToMany(mappedBy = "products")
 	private List<Movement> movements = new ArrayList<>();
+	
+	public Product() {
+		super();
+	}
 	
 	public String getItem() {
 		return item;
