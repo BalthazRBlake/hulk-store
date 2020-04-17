@@ -59,18 +59,9 @@
 					<div class="card text-white bg-dark text-center h-100">
 						<h4 class="card-header"></h4>
 						<div class="card-body">
-							<a href="#" class="btn btn-outline-primary">Agregar producto
+							<a th:href="@{/stock/{empId}/initAdd(empId=${employee.id})}" 
+							   class="btn btn-outline-primary">Agregar producto
 								al Stock</a>
-						</div>
-						<div class="card-footer"></div>
-					</div>
-				</div>
-				<div class="col mb-3">
-					<div class="card text-white bg-dark text-center h-100">
-						<h4 class="card-header"></h4>
-						<div class="card-body">
-							<a href="#" class="btn btn-outline-warning">Eliminar producto
-								del Stock</a>
 						</div>
 						<div class="card-footer"></div>
 					</div>

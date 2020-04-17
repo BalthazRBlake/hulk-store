@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org"
+	th:replace="~{fragments/layout :: layout (~{::body},'addProduct')}">
+
+<body>
+
+	<div class="card text-white bg-success">
+		<h4 class="card-header">Añadir Producto al Stock</h4>
+		<div class="card-body">
+			<form th:Object="${product}" method="POST"
+				th:action="@{/stock/{empId}/addProduct(empId=${empId})}">
+
+				<div class="card text-white bg-dark">
+
+					<div class="card-body">
+						<h4 class="card-title"></h4>
+
+						<div class="form-row">
+							<div class="col">
+								<div class="form-group">
+									<label for="item"> Item </label> <input type="text"
+										th:field="*{item}" class="form-control form-control-sm"
+										id="item" required>
+								</div>
+							</div>
+							<div class="col">
+								<div class="form-group">
+									<label for="item"> Hero </label> <input type="text"
+										th:field="*{hero}" class="form-control form-control-sm"
+										id="item" required>
+								</div>
+							</div>
+							<div class="col">
+								<div class="form-group">
+									<label for="item"> Brand </label> <input type="text"
+										th:field="*{brand}" class="form-control form-control-sm"
+										id="item" required>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="card-footer">
+						<a th:href="@{/emp/{empId}/initMove(empId=${empId})}"
+							class="btn btn-outline-danger">Cancelar</a>
+						<button type="submit" class="btn btn-outline-success" id="submit">Guardar</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</body>
+</html>

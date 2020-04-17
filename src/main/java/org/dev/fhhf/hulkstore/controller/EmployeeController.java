@@ -25,7 +25,7 @@ public class EmployeeController {
 		return "employees";
 	}
 
-	@GetMapping("{empId}/initMove")
+	@GetMapping("/{empId}/initMove")
 	public String initMovement(@PathVariable("empId") int empId, Model model) {
 		Employee employee = empService.findEmployeeById(empId);
 		model.addAttribute("employee", employee);
