@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.dev.fhhf.hulkstore.exception.NotEnoiughStockException;
 import org.dev.fhhf.hulkstore.model.Employee;
 import org.dev.fhhf.hulkstore.model.Movement;
 import org.dev.fhhf.hulkstore.model.Product;
@@ -106,7 +107,11 @@ public class MovementController {
 				} else if (type.equals("Output")) {
 					units = pro.getUnits() - aP.getUnits();
 					if (units <= 0) {
-						return "redirect:/move/" + empId + "/all";
+						throw new NotEnoiughStockException(
+								"No hay unidades suficientes para el producto: "+
+								pro.getItem()+" "+pro.getHero()+" "+pro.getBrand()+
+								" Usted solicitó: " + aP.getUnits() + ", hay disponibles: " + pro.getUnits()
+								);
 					}
 				}
 

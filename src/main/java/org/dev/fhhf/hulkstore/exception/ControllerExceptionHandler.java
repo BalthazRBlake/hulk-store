@@ -12,14 +12,21 @@ import org.springframework.web.servlet.ModelAndView;
 @ControllerAdvice
 public class ControllerExceptionHandler {
 
-    @ExceptionHandler({NoSuchElementException.class, ParseDateFormatException.class})
+    @ExceptionHandler({NoSuchElementException.class, 
+    				   ParseDateFormatException.class,
+    				   NotEnoiughStockException.class})
     public ModelAndView handleError(HttpServletRequest req, Exception ex) {
 
         ModelAndView mav = new ModelAndView();
-        AppError error;
-        error = ex.getClass().equals(NoSuchElementException.class) ? 
-        					  new AppError(ex.getMessage(), "404") :
-        					  new AppError(ex.getMessage(), "403");
+        AppError error = new AppError(ex.getMessage(), "404");
+        
+    	if(ex.getClass().equals(ParseDateFormatException.class)) {
+    		error = new AppError(ex.getMessage(), "403");
+    	}else
+    	if(ex.getClass().equals(NotEnoiughStockException.class)) {
+    		error = new AppError(ex.getMessage(), "401");
+    	}
+    	
         mav.addObject("error", error);
         mav.setViewName("error");
         return mav;
