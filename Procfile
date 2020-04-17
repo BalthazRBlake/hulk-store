@@ -1,0 +1,1 @@
+web: java -jar target/hulk-store-0.0.1-SNAPSHOT.jar
