@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.dev.fhhf.hulkstore.exception.ParseDateFormatException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,9 +17,8 @@ public class DateFormaterService {
 		String dateString = format.format(date);
 		date = format.parse (dateString);
 		} catch(ParseException ex) {
-			System.out.println("Bad Date Format   :::   ");
+			throw new ParseDateFormatException("Sucedió un error procesando la fecha", ex);
 		}
-		
 		return date;
 	}
 }

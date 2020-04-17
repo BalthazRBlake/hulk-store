@@ -8,10 +8,11 @@ import java.util.List;
 import org.dev.fhhf.hulkstore.model.Employee;
 import org.dev.fhhf.hulkstore.model.Movement;
 import org.dev.fhhf.hulkstore.model.Product;
-import org.dev.fhhf.hulkstore.repository.EmployeeRepo;
-import org.dev.fhhf.hulkstore.repository.MovementRepo;
-import org.dev.fhhf.hulkstore.repository.ProductRepo;
+
 import org.dev.fhhf.hulkstore.service.DateFormaterService;
+import org.dev.fhhf.hulkstore.service.EmployeeService;
+import org.dev.fhhf.hulkstore.service.MovementService;
+import org.dev.fhhf.hulkstore.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,11 +26,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MovementController {
 
 	@Autowired
-	private MovementRepo moveRepo;
+	private MovementService movementService;
 	@Autowired
-	private EmployeeRepo empRepo;
+	private EmployeeService employeeService;
 	@Autowired
-	private ProductRepo productRepo;
+	private ProductService productService;
 	@Autowired
 	private DateFormaterService dateService;
 
@@ -40,7 +41,7 @@ public class MovementController {
 	@GetMapping("/{empId}/all")
 	public String getAllMovements(@PathVariable("empId") int empId, Model model) {
 
-		List<Movement> movements = moveRepo.findAll();
+		List<Movement> movements = movementService.finsAllMovements();
 		List<List<String>> transactions = new ArrayList<>();
 		
 		for (Movement m : movements) {
@@ -62,12 +63,12 @@ public class MovementController {
 	public String initAddStock(@PathVariable("empId") int empId, @PathVariable("moveType") String type, Model model) {
 
 		Date date = dateService.giveFormat(new Date());
-		Employee employee = empRepo.findById(empId).get();
+		Employee employee = employeeService.findEmployeeById(empId);
 		Movement movement = new Movement(date, type, employee);
 
 		List<Product> products = new ArrayList<>();
 
-		for (Product p : productRepo.findAll()) {
+		for (Product p : productService.findAllProducts()) {
 			p.setUnits(0);
 			products.add(p);
 		}
@@ -94,7 +95,7 @@ public class MovementController {
 		for (Product aP : addedProducts) {
 			if (aP.getUnits() != 0) {
 				
-				Product pro = productRepo.findById(aP.getId()).get();
+				Product pro = productService.findProductById(aP.getId());
 
 				movedUnits = movedUnits
 						.concat(pro.getId() + " _ _ _ " + pro.getUnits() + " _ _ _ " + aP.getUnits() + ",");
@@ -116,7 +117,7 @@ public class MovementController {
 
 		movement.setMovedUnits(movedUnits);
 
-		moveRepo.save(movement);
+		movementService.saveMovement(movement);
 		return "redirect:/move/" + empId + "/all";
 	}
 

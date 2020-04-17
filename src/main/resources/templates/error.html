@@ -12,13 +12,10 @@
 				<div class="card-header"></div>
 				<div class="card-body">
 					<h4 class="card-title">
-						Error <span th:text="${error}"></span>
+						Error <span th:text="${error.errorCode}"></span>
 					</h4>
-					<div th:if="${error}==404" class="alert alert-warning">
-						¡La dirección a la que navegaste no existe!
-					</div>
-					<div th:if="${error}==500" class="alert alert-dark">
-						¡Lo sentimos, algo salió mal!
+					<div class="alert alert-warning">
+						<span th:text="${error.errorMessage}"></span> 
 					</div>
 				</div>
 				<div class="card-footer"></div>

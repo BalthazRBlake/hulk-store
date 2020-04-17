@@ -19,6 +19,11 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	@Override
+	public Product findProductById(int itemId) {
+		return productRepo.findById(itemId).get();
+	}
+
+	@Override
 	public Product findProductByItem(String item) {
 		return productRepo.findProductByItem(item).get();
 	}

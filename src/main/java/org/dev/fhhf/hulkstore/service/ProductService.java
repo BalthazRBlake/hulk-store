@@ -8,6 +8,8 @@ public interface ProductService {
 
 	List<Product> findAllProducts();
 	
+	Product findProductById(int itemId);
+	
 	Product findProductByItem(String item);
 	
 	//Save New or Update
