@@ -1,6 +1,6 @@
 # Hulk | Store
 
-La aplicación fue desarrollada con Java 8, Spring Framework, Thymeleaf, JavaScript, Junit 5 y in-memory HsqlDb.
+La aplicación fue desarrollada con Java 8, Spring Framework, Thymeleaf, JavaScript, Junit 5 y Hsqldb in-memory.
 
 ### Features 
 
@@ -13,24 +13,24 @@ La aplicación fue desarrollada con Java 8, Spring Framework, Thymeleaf, JavaScr
 
 ### Para ejecutar localmente
 
-1 Clonar el repositorio
+1. Clonar el repositorio
 
 ```
 	git clone https://github.com/BalthazRBlake/hulk-store.git
 ```
 
-2 Build maven project
+2. Build maven project
 
 ```
 	mvn clean install
 ```
 
-3 Ejecutar el jar
+3. Ejecutar el jar
 
 ```
 	java -jar target/hulk-store-0.0.1-SNAPSHOT.jar
 ```
 
-4 Navegar a la dirección
+4. Navegar a la dirección
 
 >	http://localhost:5000/
