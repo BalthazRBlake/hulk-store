@@ -65,6 +65,14 @@ public class Movement extends BasicEntity{
 		this.employee = employee;
 	}
 	
+	public Movement(Integer id, Date date, String movedUnits, String type, Employee employee) {
+		super(id);
+		this.date = date;
+		this.movedUnits = movedUnits;
+		this.type = type;
+		this.employee = employee;
+	}
+	
 	public Date getDate() {
 		return date;
 	}

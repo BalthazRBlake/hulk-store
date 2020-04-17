@@ -6,7 +6,7 @@ import org.dev.fhhf.hulkstore.model.Movement;
 
 public interface MovementService {
 
-	List<Movement> finsAllMovements();
+	List<Movement> findAllMovements();
 	
 	Movement findMovemenetById(int id);
 	

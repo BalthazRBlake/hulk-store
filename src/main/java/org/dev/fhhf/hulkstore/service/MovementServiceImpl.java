@@ -14,7 +14,7 @@ public class MovementServiceImpl implements MovementService{
 	private MovementRepo moveRepo;
 
 	@Override
-	public List<Movement> finsAllMovements() {
+	public List<Movement> findAllMovements() {
 		return moveRepo.findAll();
 	}
 

@@ -41,7 +41,7 @@ public class MovementController {
 	@GetMapping("/{empId}/all")
 	public String getAllMovements(@PathVariable("empId") int empId, Model model) {
 
-		List<Movement> movements = movementService.finsAllMovements();
+		List<Movement> movements = movementService.findAllMovements();
 		List<List<String>> transactions = new ArrayList<>();
 		
 		for (Movement m : movements) {
