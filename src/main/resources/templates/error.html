@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org"
+	th:replace="~{fragments/layout :: layout (~{::body},'error')}">
+
+<body>
+
+	<div class="card text-white bg-danger">
+		<h4 class="card-header">¡Ups!</h4>
+		<div class="card-body">
+			<div class="card text-white bg-dark">
+				<div class="card-header"></div>
+				<div class="card-body">
+					<h4 class="card-title">
+						Error <span th:text="${error.errorCode}"></span>
+					</h4>
+					<div class="alert alert-warning">
+						<span th:text="${error.errorMessage}"></span> 
+					</div>
+				</div>
+				<div class="card-footer"></div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

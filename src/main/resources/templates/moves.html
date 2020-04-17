@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org"
+	th:replace="~{fragments/layout :: layout (~{::body},'moves')}">
+
+<body>
+
+	<div class="card text-white bg-success">
+		<h4 class="card-header">Historial de Movimientos</h4>
+		<div class="card-body">
+			<div class="card text-white bg-dark">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-6">
+							<table class="table table-dark  table-sm table-hover">
+								<th:block th:each="move : ${moves}">
+									<thead class="thead-light">
+										<tr>
+											<th><span th:if="${move.type}==Input"
+												class="badge badge-primary" role="alert"> Compra </span> <span
+												th:if="${move.type}==Output" class="badge badge-warning"
+												role="alert"> Venta </span> | De: <span
+												th:text="${move.employee.firstName}"></span> | Fecha: <span
+												th:text="${move.date}"></span></th>
+										</tr>
+									</thead>
+									<tbody>
+										<th:block th:each="prod : ${move.products}">
+											<tr>
+												<td><span th:text="${prod.item}"></span> <span
+													th:text="${prod.hero}"></span> <span
+													th:text="${prod.brand}"></span> | Id: <span
+													th:text="${prod.id}"></span> | Unidades: <span
+													class="badge badge-light" th:text="${prod.units}"></span></td>
+											</tr>
+										</th:block>
+									</tbody>
+								</th:block>
+							</table>
+						</div>
+						<div class="col-sm-6">
+							<table class="table table-dark table-sm table-hover">
+								<th:block th:each="trans : ${transactions}">
+									<thead class="thead-light">
+										<tr>
+											<th>&nbsp &nbsp Id | Inicio | Movio</th>
+										</tr>
+									</thead>
+									<tbody>
+										<th:block th:each="tra : ${trans}">
+											<tr>
+												<td>&nbsp &nbsp &nbsp<span th:text="${tra}"></span>
+												</td>
+											</tr>
+										</th:block>
+									</tbody>
+								</th:block>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card-footer">
+			<a th:href="@{/emp/{empId}/initMove(empId=${empId})}"
+				class="btn btn-dark">Regresar</a>
+		</div>
+	</div>
+
+</body>
+</html>
