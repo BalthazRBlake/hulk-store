@@ -2,16 +2,16 @@
 
 La aplicación fue desarrollada con Java 8, Spring Framework, Thymeleaf, JavaScript, Junit 5 y in-memory HsqlDb.
 
-###Features 
+### Features 
 
 * Tiene funcionalidades generales para añadir productos, y realizar operaciones de venta y compra de los mismos.
 * Quedo pendiente eliminar y/o editar los prodcutos (con un usuario Administrativo), al igual que añadir, editar y/o eliminar Empleados.
 * Se implementó Unit test para los controladores, no se han cubierto todos los métodos.
 * Cuenta con un ExceptionHander global para manejar las Excepciones por errores en los datos.
 
-###[Link a la applicación corriendo en Heroku](https://hulk-store-kardex.herokuapp.com/)
+### [Link a la applicación corriendo en Heroku](https://hulk-store-kardex.herokuapp.com/)
 
-###Para ejecutar localmente
+### Para ejecutar localmente
 
 1 Clonar el repositorio
 
