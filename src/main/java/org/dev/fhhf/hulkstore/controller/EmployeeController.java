@@ -1,8 +1,5 @@
 package org.dev.fhhf.hulkstore.controller;
 
-import java.util.List;
-
-import org.dev.fhhf.hulkstore.model.Employee;
 import org.dev.fhhf.hulkstore.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,15 +17,13 @@ public class EmployeeController {
 
 	@GetMapping("/all")
 	public String getAllEmployees(Model model) {
-		List<Employee> employees = empService.findAllEmployees();
-		model.addAttribute("employees", employees);
+		model.addAttribute("employees", empService.findAllEmployees());
 		return "employees";
 	}
 
 	@GetMapping("/{empId}/initMove")
 	public String initMovement(@PathVariable("empId") int empId, Model model) {
-		Employee employee = empService.findEmployeeById(empId);
-		model.addAttribute("employee", employee);
+		model.addAttribute("employee", empService.findEmployeeById(empId));
 		return "movements";
 	}
 }
