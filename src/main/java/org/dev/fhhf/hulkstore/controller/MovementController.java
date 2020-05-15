@@ -1,11 +1,8 @@
 package org.dev.fhhf.hulkstore.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import org.dev.fhhf.hulkstore.exception.NotEnoiughStockException;
 import org.dev.fhhf.hulkstore.model.Employee;
 import org.dev.fhhf.hulkstore.model.Movement;
 import org.dev.fhhf.hulkstore.model.Product;
@@ -74,40 +71,8 @@ public class MovementController {
 	@PostMapping("/{empId}/{moveType}/Products")
 	public String executeOperation(@PathVariable("empId") int empId, @PathVariable("moveType") String type,
 			Movement movement) {
-
-		List<Product> addedProducts = (List<Product>) movement.getProducts();
-		String movedUnits = "";
-		movement.setProducts(new ArrayList<Product>());
-
-		for (Product aP : addedProducts) {
-			if (aP.getUnits() != 0) {
-				
-				Product pro = productService.findProductById(aP.getId());
-
-				movedUnits = movedUnits
-						.concat(pro.getId() + " _ _ _ " + pro.getUnits() + " _ _ _ " + aP.getUnits() + ",");
-				int units = 0;
-
-				if (type.equals("Input")) {
-					units = pro.getUnits() + aP.getUnits();
-				} else if (type.equals("Output")) {
-					units = pro.getUnits() - aP.getUnits();
-					if (units <= 0) {
-						throw new NotEnoiughStockException(
-								"No hay unidades suficientes para el producto: "+
-								pro.getItem()+" "+pro.getHero()+" "+pro.getBrand()+
-								" Usted solicitó: " + aP.getUnits() + ", hay disponibles: " + pro.getUnits()
-								);
-					}
-				}
-
-				pro.setUnits(units);
-				movement.addProduct(pro);
-			}
-		}
-
-		movement.setMovedUnits(movedUnits);
-
+		
+		productService.getAddedProducts(movement, type);
 		movementService.saveMovement(movement);
 		return "redirect:/move/" + empId + "/all";
 	}

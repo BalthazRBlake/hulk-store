@@ -2,6 +2,7 @@ package org.dev.fhhf.hulkstore.service;
 
 import java.util.List;
 
+import org.dev.fhhf.hulkstore.model.Movement;
 import org.dev.fhhf.hulkstore.model.Product;
 
 public interface ProductService {
@@ -18,4 +19,6 @@ public interface ProductService {
 	void deleteProduct(Product product);
 	
 	List<Product> getEmptyListOfProducts();
+	
+	void getAddedProducts(Movement movement, String type);
 }
