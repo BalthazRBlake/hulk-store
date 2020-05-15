@@ -59,16 +59,8 @@ public class MovementController {
 
 		Date date = dateService.giveFormat(new Date());
 		Employee employee = employeeService.findEmployeeById(empId);
-		Movement movement = new Movement(date, type, employee);
-
-		List<Product> products = new ArrayList<>();
-
-		for (Product p : productService.findAllProducts()) {
-			p.setUnits(0);
-			products.add(p);
-		}
-
-		movement.setProducts(products);
+		List<Product> products = productService.getEmptyListOfProducts();
+		Movement movement = new Movement(date, type, employee, products);
 
 		model.addAttribute("movement", movement);
 		model.addAttribute("empId", empId);

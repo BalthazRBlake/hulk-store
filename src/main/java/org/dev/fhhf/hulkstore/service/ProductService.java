@@ -16,4 +16,6 @@ public interface ProductService {
 	Product saveProduct(Product product);
 	
 	void deleteProduct(Product product);
+	
+	List<Product> getEmptyListOfProducts();
 }

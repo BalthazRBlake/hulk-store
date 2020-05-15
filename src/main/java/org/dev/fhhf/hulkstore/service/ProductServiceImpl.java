@@ -1,5 +1,6 @@
 package org.dev.fhhf.hulkstore.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.dev.fhhf.hulkstore.model.Product;
@@ -37,4 +38,17 @@ public class ProductServiceImpl implements ProductService{
 	public void deleteProduct(Product product) {
 		productRepo.delete(product);
 	}
+
+	@Override
+	public List<Product> getEmptyListOfProducts() {
+		List<Product> products = new ArrayList<>();
+
+		for (Product p : productRepo.findAll()) {
+			p.setUnits(0);
+			products.add(p);
+		}
+		return products;
+	}
+	
+	
 }
