@@ -13,4 +13,6 @@ public interface MovementService {
 	Movement saveMovement(Movement movement);
 	
 	void deleteMovement(Movement movement);
+	
+	List<List<String>> getTransactions(List<Movement> movements);
 }

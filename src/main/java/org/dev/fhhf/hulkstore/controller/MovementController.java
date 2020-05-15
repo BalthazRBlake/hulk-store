@@ -43,20 +43,10 @@ public class MovementController {
 
 		List<Movement> movements = movementService.findAllMovements();
 		
-		model.addAttribute("transactions", getTransactions(movements));
+		model.addAttribute("transactions", movementService.getTransactions(movements));
 		model.addAttribute("moves", movements);
 		model.addAttribute("empId", empId);
 		return "moves";
-	}
-	
-	private List<List<String>> getTransactions(List<Movement> movements) {
-		List<List<String>> transactions = new ArrayList<>();
-		
-		for (Movement m : movements) {
-			transactions.add(Arrays.asList(m.getMovedUnits().split(",")));
-		}
-		
-		return transactions;
 	}
 
 	/**

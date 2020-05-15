@@ -1,5 +1,7 @@
 package org.dev.fhhf.hulkstore.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.dev.fhhf.hulkstore.model.Movement;
@@ -31,5 +33,16 @@ public class MovementServiceImpl implements MovementService{
 	@Override
 	public void deleteMovement(Movement movement) {
 		moveRepo.delete(movement);
+	}
+	
+	@Override
+	public List<List<String>> getTransactions(List<Movement> movements) {
+		List<List<String>> transactions = new ArrayList<>();
+		
+		for (Movement m : movements) {
+			transactions.add(Arrays.asList(m.getMovedUnits().split(",")));
+		}
+		
+		return transactions;
 	}
 }
