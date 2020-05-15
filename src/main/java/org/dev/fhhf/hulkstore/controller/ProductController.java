@@ -1,7 +1,5 @@
 package org.dev.fhhf.hulkstore.controller;
 
-import java.util.List;
-
 import org.dev.fhhf.hulkstore.model.Product;
 import org.dev.fhhf.hulkstore.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;

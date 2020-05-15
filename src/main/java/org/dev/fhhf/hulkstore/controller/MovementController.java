@@ -36,23 +36,27 @@ public class MovementController {
 	private DateFormaterService dateService;
 
 	/**
-	 * Pone loas atributos en el modelo, transactions extrae la información
-	 * detallada de cada movimiento
+	 * Pone loas atributos en el modelo
 	 */
 	@GetMapping("/{empId}/all")
 	public String getAllMovements(@PathVariable("empId") int empId, Model model) {
 
 		List<Movement> movements = movementService.findAllMovements();
+		
+		model.addAttribute("transactions", getTransactions(movements));
+		model.addAttribute("moves", movements);
+		model.addAttribute("empId", empId);
+		return "moves";
+	}
+	
+	private List<List<String>> getTransactions(List<Movement> movements) {
 		List<List<String>> transactions = new ArrayList<>();
 		
 		for (Movement m : movements) {
 			transactions.add(Arrays.asList(m.getMovedUnits().split(",")));
 		}
-
-		model.addAttribute("transactions", transactions);
-		model.addAttribute("moves", movements);
-		model.addAttribute("empId", empId);
-		return "moves";
+		
+		return transactions;
 	}
 
 	/**
