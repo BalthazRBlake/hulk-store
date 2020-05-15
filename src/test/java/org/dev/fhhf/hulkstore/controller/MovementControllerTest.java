@@ -56,27 +56,15 @@ public class MovementControllerTest {
 	
 	@Test
 	public void getAllMovementsTest() throws Exception {
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.YEAR, 1990);
-		cal.set(Calendar.MONTH, Calendar.JANUARY);
-		cal.set(Calendar.DAY_OF_MONTH, 6);
-		Date date = cal.getTime();
 		
-		when(dateService.giveFormat(date))
-				.thenReturn(cal.getTime());
-		
-		Movement move1 = new Movement(1, date, "1 0 50,4 5 20", "Input", new Employee(1, "Juan"));
-		Movement move2 = new Movement(2, date, "2 45 5", "Output", new Employee(2, "Laura"));
+		Movement move1 = new Movement(1, "1 0 50,4 5 20", "Input", new Employee(1, "Juan"));
+		Movement move2 = new Movement(2, "2 45 5", "Output", new Employee(2, "Laura"));
 		
 		when(movementService.findAllMovements())
 				.thenReturn(Arrays.asList(move1, move2));
 		
 		mockMvc.perform(get("/move/3/all"))
-		        .andExpect(status().isOk())
-		        
-		        .andExpect(model().attribute("transactions", hasSize(2)))
-		        .andExpect(model().attribute("transactions", hasItem(contains("1 0 50", "4 5 20"))))
-		        .andExpect(model().attribute("transactions", hasItem(contains("2 45 5"))))
+				.andExpect(status().isOk())
 		        .andExpect(model().attribute("moves", hasSize(2)))
 		        .andExpect(model().attribute("empId", is(3)));
 	}
