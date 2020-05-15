@@ -21,22 +21,20 @@ public class ProductController {
 
 	@GetMapping("/{empId}/all")
 	public String getAllProductss(@PathVariable("empId") int empId, Model model) {
-		List<Product> products = productService.findAllProducts();
-		model.addAttribute("products", products);
+		model.addAttribute("products", productService.findAllProducts());
 		model.addAttribute("empId", empId);
 		return "products";
 	}
 	
 	@GetMapping("/{empId}/initAdd")
 	public String initAddtProduct(@PathVariable("empId") int empId, Model model) {
-		Product product = new Product();
-		model.addAttribute("product", product);
+		model.addAttribute("product", new Product());
 		model.addAttribute("empId", empId);
 		return "addProduct";
 	}
 	
 	@PostMapping("/{empId}/addProduct")
-	public String addtProduct(@PathVariable("empId") int empId, Product product, Model model) {
+	public String addtProduct(@PathVariable("empId") int empId, Product product) {
 		product.setUnits(0);
 		productService.saveProduct(product);
 		return "redirect:/stock/" + empId + "/all";
