@@ -3,6 +3,7 @@ package org.dev.fhhf.hulkstore.controller;
 import java.util.Date;
 import java.util.List;
 
+import org.dev.fhhf.hulkstore.exception.NotEnoughStockException;
 import org.dev.fhhf.hulkstore.model.Employee;
 import org.dev.fhhf.hulkstore.model.Movement;
 import org.dev.fhhf.hulkstore.model.Product;
@@ -33,7 +34,7 @@ public class MovementController {
 	private DateFormaterService dateService;
 
 	/**
-	 * Pone loas atributos en el modelo
+	 * Pone los atributos en el modelo
 	 */
 	@GetMapping("/{empId}/all")
 	public String getAllMovements(@PathVariable("empId") int empId, Model model) {
@@ -52,7 +53,8 @@ public class MovementController {
 	 * @param type identifica el tipo de operacion
 	 */
 	@GetMapping("/{empId}/init/{moveType}")
-	public String initAddStock(@PathVariable("empId") int empId, @PathVariable("moveType") String type, Model model) {
+	public String initAddStock(@PathVariable("empId") int empId, 
+							   @PathVariable("moveType") String type, Model model) {
 
 		Date date = dateService.giveFormat(new Date());
 		Employee employee = employeeService.findEmployeeById(empId);
@@ -69,10 +71,15 @@ public class MovementController {
 	 * 
 	 */
 	@PostMapping("/{empId}/{moveType}/Products")
-	public String executeOperation(@PathVariable("empId") int empId, @PathVariable("moveType") String type,
-			Movement movement) {
+	public String executeOperation(@PathVariable("empId") int empId, 
+								   @PathVariable("moveType") String type, Movement movement) {
 		
 		productService.getAddedProducts(movement, type);
+		
+		if(movement.getMovedUnits().contentEquals("")) {
+			throw new NotEnoughStockException("¡La operación no puede ser vacia!");
+		}
+		
 		movementService.saveMovement(movement);
 		return "redirect:/move/" + empId + "/all";
 	}

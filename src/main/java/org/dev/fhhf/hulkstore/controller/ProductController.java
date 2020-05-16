@@ -18,7 +18,7 @@ public class ProductController {
 	private ProductService productService;
 
 	@GetMapping("/{empId}/all")
-	public String getAllProductss(@PathVariable("empId") int empId, Model model) {
+	public String getAllProducts(@PathVariable("empId") int empId, Model model) {
 		model.addAttribute("products", productService.findAllProducts());
 		model.addAttribute("empId", empId);
 		return "products";

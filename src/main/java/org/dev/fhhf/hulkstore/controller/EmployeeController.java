@@ -21,6 +21,9 @@ public class EmployeeController {
 		return "employees";
 	}
 
+	/*
+	 * Pone al Empleado en sessión 
+	 */
 	@GetMapping("/{empId}/initMove")
 	public String initMovement(@PathVariable("empId") int empId, Model model) {
 		model.addAttribute("employee", empService.findEmployeeById(empId));
