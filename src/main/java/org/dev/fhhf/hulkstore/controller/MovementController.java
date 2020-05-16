@@ -40,7 +40,7 @@ public class MovementController {
 
 		List<Movement> movements = movementService.findAllMovements();
 		
-		model.addAttribute("transactions", movementService.getTransactions(movements));
+		model.addAttribute("movedUnits", movementService.getMovedUnitsPerMove(movements));
 		model.addAttribute("moves", movements);
 		model.addAttribute("empId", empId);
 		return "moves";

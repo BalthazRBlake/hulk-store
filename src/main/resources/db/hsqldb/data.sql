@@ -12,8 +12,8 @@ INSERT INTO employees VALUES (4, 'Marta');
 INSERT INTO employees VALUES (5, 'Viviana');
 INSERT INTO employees VALUES (6, 'Dario');
 
-INSERT INTO movements VALUES (1, '2020-01-07', '1 _ _ _ 0 _ _ _ 50,3 _ _ _ 0 _ _ _ 40,5 _ _ _ 0 _ _ _ 60', 'Input', 1);
-INSERT INTO movements VALUES (2, '2020-01-17', '2 _ _ _ 0 _ _ _ 30,4 _ _ _ 0 _ _ _ 25,6 _ _ _ 0 _ _ _ 55', 'Input', 2);
+INSERT INTO movements VALUES (1, '2020-01-07', '1 0 50,3 0 40,5 0 60', 'Input', 1);
+INSERT INTO movements VALUES (2, '2020-01-17', '2 0 30,4 0 25,6 0 55', 'Input', 2);
 
 INSERT INTO product_movement VALUES (1, 1);
 INSERT INTO product_movement VALUES (3, 1);

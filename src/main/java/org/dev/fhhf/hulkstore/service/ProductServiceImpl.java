@@ -76,7 +76,7 @@ public class ProductServiceImpl implements ProductService{
 	private String updateMovedUnits(int productId, String movedUnits, int addedUnits) {
 		
 		Product product = productRepo.findById(productId).get();
-		return movedUnits.concat(product.getId() + " _ _ _ " + product.getUnits() + " _ _ _ " + addedUnits + ",");
+		return movedUnits.concat(product.getId() + " " + product.getUnits() + " " + addedUnits + ",");
 	}
 	
 	private Product processProduct(Product addedProduct, String type) {

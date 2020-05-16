@@ -2,6 +2,7 @@ package org.dev.fhhf.hulkstore.service;
 
 import java.util.List;
 
+import org.dev.fhhf.hulkstore.model.MovedUnits;
 import org.dev.fhhf.hulkstore.model.Movement;
 
 public interface MovementService {
@@ -14,5 +15,5 @@ public interface MovementService {
 	
 	void deleteMovement(Movement movement);
 	
-	List<List<String>> getTransactions(List<Movement> movements);
+	List<MovedUnits> getMovedUnitsPerMove(List<Movement> movements);
 }

@@ -1,9 +1,9 @@
 package org.dev.fhhf.hulkstore.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import org.dev.fhhf.hulkstore.model.MovedUnits;
 import org.dev.fhhf.hulkstore.model.Movement;
 import org.dev.fhhf.hulkstore.repository.MovementRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,13 +36,27 @@ public class MovementServiceImpl implements MovementService{
 	}
 	
 	@Override
-	public List<List<String>> getTransactions(List<Movement> movements) {
-		List<List<String>> transactions = new ArrayList<>();
+	public List<MovedUnits> getMovedUnitsPerMove(List<Movement> movements) {
+		
+		List<MovedUnits> transactions = new ArrayList<>();
 		
 		for (Movement m : movements) {
-			transactions.add(Arrays.asList(m.getMovedUnits().split(",")));
-		}
-		
+			
+			transactions.add(new MovedUnits(0,0,0)); // Insert blank space to show data in frontEnd
+			
+			String[] trans = m.getMovedUnits().split(",");
+
+			for (String t : trans) {
+
+				String[] values = t.split(" ");
+				
+				transactions.add(new MovedUnits(
+					Integer.valueOf(values[0]),
+					Integer.valueOf(values[1]),
+					Integer.valueOf(values[2])
+				));
+			}
+		}		
 		return transactions;
 	}
 }
