@@ -1,10 +1,10 @@
 package org.dev.fhhf.hulkstore.controller;
 
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
 
 import org.dev.fhhf.hulkstore.model.Employee;
+import org.dev.fhhf.hulkstore.model.MovedUnits;
 import org.dev.fhhf.hulkstore.model.Movement;
 import org.dev.fhhf.hulkstore.service.DateFormaterService;
 import org.dev.fhhf.hulkstore.service.EmployeeService;
@@ -12,7 +12,6 @@ import org.dev.fhhf.hulkstore.service.MovementService;
 import org.dev.fhhf.hulkstore.service.ProductService;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import org.mockito.InjectMocks;
@@ -57,25 +56,38 @@ public class MovementControllerTest {
 		
 		Movement move1 = new Movement(1, "1 0 50,4 5 20", "Input", new Employee(1, "Juan"));
 		Movement move2 = new Movement(2, "2 45 5", "Output", new Employee(2, "Laura"));
+		List<Movement> movements = Arrays.asList(move1, move2);
+		
+		MovedUnits movedU1 = new MovedUnits(1, 0, 50);
+		MovedUnits movedU2 = new MovedUnits(4, 5, 20);
+		MovedUnits movedU3 = new MovedUnits(2, 45, 5);
+		List<MovedUnits> movedUnits = Arrays.asList(movedU1, movedU2, movedU3);
+		
 		
 		when(movementService.findAllMovements())
-				.thenReturn(Arrays.asList(move1, move2));
+				.thenReturn(movements);
+		
+		when(movementService.getMovedUnitsPerMove(movements))
+				.thenReturn(movedUnits);
 		
 		mockMvc.perform(get("/move/3/all"))
 				.andExpect(status().isOk())
+				.andExpect(model().attribute("movedUnits", hasSize(3)))
 		        .andExpect(model().attribute("moves", hasSize(2)))
 		        .andExpect(model().attribute("empId", is(3)));
 	}
 	
 	@Test
-	@Disabled
 	public void executeOperationTest() throws Exception {
 
+		Movement move1 = new Movement(1, "1 0 50,4 5 20", "Input", new Employee(6, "Juan"));
+		
         mockMvc.perform(
                 post("/move/6/Input/Products")
+                .flashAttr("movement", move1)
 		        )
-        		.andDo(print());
-		        //.andExpect(status().is(302))
-		        //.andExpect(view().name("redirect:/move/6/all"));
+		        .andExpect(status().is(302))
+		        .andExpect(view().name("redirect:/move/6/all"));
+				//.andDo(print());
 	}
 }
