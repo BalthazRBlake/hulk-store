@@ -30,7 +30,7 @@ class MovementServiceTest {
 	private MovementServiceImpl movementService;
 	
 	@Test
-	@DisplayName("Encontrando todos los movimientos")
+	@DisplayName("Debe retornar todos los movimientos")
 	void testFindAllMovements() {
 	
 		Movement move1 = new Movement(1, "1 0 50,4 5 20", "Input", new Employee(1, "Juan"));
@@ -45,6 +45,7 @@ class MovementServiceTest {
 	}
 
 	@Test
+	@DisplayName("Debe retornar el movimiento solicitado")
 	void testFindMovemenetById() {
 		
 		final int id = 1;
@@ -55,9 +56,23 @@ class MovementServiceTest {
 		final Movement actual = movementService.findMovemenetById(1);
 		
 		assertAll(
-			() -> assertEquals(move, actual),
-			() -> assertNotNull(actual)
+			() -> assertNotNull(actual),
+			() -> assertEquals(move, actual)
 		);
+	}
+	
+	
+	@Test
+	void testSaveMovement() {
+	
+		final Movement move = new Movement(1, "1 0 50,4 5 20", "Input", new Employee(1, "Juan"));
+		
+		when(moveRepo.save(move)).thenReturn(move);
+		when(moveRepo.save(move)).then(invocation -> invocation.getArgument(0));
+		
+		final Movement actual = movementService.saveMovement(move);
+
+		assertEquals(move, actual);
 	}
 	
 	@Test
