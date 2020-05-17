@@ -14,16 +14,16 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler({NoSuchElementException.class, 
     				   ParseDateFormatException.class,
-    				   NotEnoiughStockException.class})
+    				   NotEnoughStockException.class})
     public ModelAndView handleError(HttpServletRequest req, Exception ex) {
 
         ModelAndView mav = new ModelAndView();
         AppError error = new AppError(ex.getMessage(), "404");
         
-    	if(ex.getClass().equals(ParseDateFormatException.class)) {
+    	if (ex.getClass().equals(ParseDateFormatException.class)) {
     		error = new AppError(ex.getMessage(), "403");
-    	}else
-    	if(ex.getClass().equals(NotEnoiughStockException.class)) {
+    	} else
+    	if (ex.getClass().equals(NotEnoughStockException.class)) {
     		error = new AppError(ex.getMessage(), "401");
     	}
     	

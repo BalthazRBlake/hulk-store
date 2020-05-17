@@ -16,12 +16,15 @@
 								<th:block th:each="move : ${moves}">
 									<thead class="thead-light">
 										<tr>
-											<th><span th:if="${move.type}==Input"
-												class="badge badge-primary" role="alert"> Compra </span> <span
-												th:if="${move.type}==Output" class="badge badge-warning"
-												role="alert"> Venta </span> | De: <span
-												th:text="${move.employee.firstName}"></span> | Fecha: <span
-												th:text="${move.date}"></span></th>
+											<th>
+												<span th:if="${move.type}==Input" class="badge badge-primary" 
+													  role="alert"> Compra </span>
+													  
+												<span th:if="${move.type}==Output" class="badge badge-warning"
+													  role="alert"> Venta </span> | De: 
+												<span th:text="${move.employee.firstName}"></span> | Fecha: 
+												<span th:text="${move.date}"></span>
+											</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -40,21 +43,30 @@
 						</div>
 						<div class="col-sm-6">
 							<table class="table table-dark table-sm table-hover">
-								<th:block th:each="trans : ${transactions}">
+								<th:block th:each="move : ${movedUnits}">
+									
 									<thead class="thead-light">
-										<tr>
-											<th>&nbsp &nbsp Id | Inicio | Movio</th>
+										<tr th:if="${move.productId}==0">
+											<th>Producto ID</th>
+											<th>Unidades Iniciales</th>
+											<th>Unidades Movidas</th>
 										</tr>
 									</thead>
+									
 									<tbody>
-										<th:block th:each="tra : ${trans}">
-											<tr>
-												<td>&nbsp &nbsp &nbsp<span th:text="${tra}"></span>
-												</td>
-											</tr>
-										</th:block>
+										<tr th:if="${move.productId}!=0">
+											<td>
+												<span th:text="${move.productId}"></span>
+											</td>
+											<td>
+												<span th:text="${move.initialUnits}"></span>
+											</td>
+											<td>
+												<span th:text="${move.movedUnits}"></span>
+											</td>
+										</tr>
 									</tbody>
-								</th:block>
+								</th:block>	
 							</table>
 						</div>
 					</div>
