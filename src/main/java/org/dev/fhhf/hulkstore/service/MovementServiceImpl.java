@@ -27,6 +27,11 @@ public class MovementServiceImpl implements MovementService{
 
 	@Override
 	public Movement saveMovement(Movement movement) {
+		
+		if (movement.getMovedUnits().equals("")) {
+			return null;
+		}
+		
 		return moveRepo.save(movement);
 	}
 
