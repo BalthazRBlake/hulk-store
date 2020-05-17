@@ -14,18 +14,22 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler({NoSuchElementException.class, 
     				   ParseDateFormatException.class,
+    				   NumberFormatException.class,
     				   NotEnoughStockException.class})
     public ModelAndView handleError(HttpServletRequest req, Exception ex) {
 
         ModelAndView mav = new ModelAndView();
         AppError error = new AppError(ex.getMessage(), "404");
         
-    	if(ex.getClass().equals(ParseDateFormatException.class)) {
+    	if (ex.getClass().equals(ParseDateFormatException.class)) {
     		error = new AppError(ex.getMessage(), "403");
-    	}else
-    	if(ex.getClass().equals(NotEnoughStockException.class)) {
+    	} else
+    	if (ex.getClass().equals(NotEnoughStockException.class)) {
     		error = new AppError(ex.getMessage(), "401");
-    	}
+    	} else
+		if (ex.getClass().equals(NumberFormatException.class)) {
+			error = new AppError("¡La operación no puede ser vacia!", "406");
+		}
     	
         mav.addObject("error", error);
         mav.setViewName("error");

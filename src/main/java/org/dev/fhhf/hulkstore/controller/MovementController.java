@@ -75,11 +75,6 @@ public class MovementController {
 								   @PathVariable("moveType") String type, Movement movement) {
 		
 		productService.getAddedProducts(movement, type);
-		
-		if(movement.getMovedUnits().contentEquals("")) {
-			throw new NotEnoughStockException("¡La operación no puede ser vacia!");
-		}
-		
 		movementService.saveMovement(movement);
 		return "redirect:/move/" + empId + "/all";
 	}
