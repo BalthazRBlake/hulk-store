@@ -8,22 +8,44 @@ import java.util.List;
 import org.dev.fhhf.hulkstore.model.Employee;
 import org.dev.fhhf.hulkstore.model.MovedUnits;
 import org.dev.fhhf.hulkstore.model.Movement;
-import org.junit.jupiter.api.BeforeEach;
+import org.dev.fhhf.hulkstore.repository.MovementRepo;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-class MovementServiceImplTest {
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-	private MovementServiceImpl movementServiceImpl;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+class MovementServiceTest {
+
+	@Mock
+	private MovementRepo moveRepo;
+	@InjectMocks
+	private MovementServiceImpl movementService;
 	
-	@BeforeEach
-	void setUp() throws Exception {
-		movementServiceImpl = new MovementServiceImpl();
+	@Test
+	@DisplayName("Encontrando todos los movimientos")
+	void testFindAllMovements() {
+	
+		Movement move1 = new Movement(1, "1 0 50,4 5 20", "Input", new Employee(1, "Juan"));
+		Movement move2 = new Movement(2, "2 45 5", "Output", new Employee(2, "Laura"));
+		List<Movement> movements = Arrays.asList(move1, move2);
+		
+		when(moveRepo.findAll()).thenReturn(movements);
+
+		List<Movement> actual = movementService.findAllMovements();
+
+		assertEquals(movements, actual);
 	}
 
 	@Test
-	@DisplayName("Obteniendo los movimientos de unidades ")
-	public void testGetMovedUnitsPerMove() {
+	@DisplayName("Obteniendo las unidades movidas por operacion")
+	void testGetMovedUnitsPerMove() {
 		
 		Movement move1 = new Movement(1, "1 0 50,4 5 20", "Input", new Employee(1, "Juan"));
 		Movement move2 = new Movement(2, "2 45 5", "Output", new Employee(2, "Laura"));
@@ -36,7 +58,7 @@ class MovementServiceImplTest {
 		
 		final List<MovedUnits> EXPECTED = Arrays.asList(movedU0, movedU1, movedU2, movedU0, movedU3); 
 		
-		final List<MovedUnits> ACTUAL =  movementServiceImpl.getMovedUnitsPerMove(movements);
+		final List<MovedUnits> ACTUAL =  movementService.getMovedUnitsPerMove(movements);
 		
 		assertAll(() -> {
 					for(int i = 0; i < ACTUAL.size(); i++) {
