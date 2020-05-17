@@ -68,11 +68,20 @@ class MovementServiceTest {
 		final Movement move = new Movement(1, "1 0 50,4 5 20", "Input", new Employee(1, "Juan"));
 		
 		when(moveRepo.save(move)).thenReturn(move);
-		when(moveRepo.save(move)).then(invocation -> invocation.getArgument(0));
 		
 		final Movement actual = movementService.saveMovement(move);
 
 		assertEquals(move, actual);
+	}
+	
+	@Test
+	void testShouldNotSaveMovement() {
+	
+		final Movement move = new Movement(1, "", "Input", new Employee(1, "Juan"));
+		
+		final Movement actual = movementService.saveMovement(move);
+
+		assertNull(actual);
 	}
 	
 	@Test
