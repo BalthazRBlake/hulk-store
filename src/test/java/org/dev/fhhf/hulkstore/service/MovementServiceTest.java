@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.dev.fhhf.hulkstore.model.Employee;
 import org.dev.fhhf.hulkstore.model.MovedUnits;
@@ -43,6 +44,22 @@ class MovementServiceTest {
 		assertEquals(movements, actual);
 	}
 
+	@Test
+	void testFindMovemenetById() {
+		
+		final int id = 1;
+		final Movement move = new Movement(1, "1 0 50,4 5 20", "Input", new Employee(1, "Juan"));
+		
+		when(moveRepo.findById(id)).thenReturn(Optional.of(move));
+		
+		final Movement actual = movementService.findMovemenetById(1);
+		
+		assertAll(
+			() -> assertEquals(move, actual),
+			() -> assertNotNull(actual)
+		);
+	}
+	
 	@Test
 	@DisplayName("Obteniendo las unidades movidas por operacion")
 	void testGetMovedUnitsPerMove() {
