@@ -1,11 +1,8 @@
 package org.dev.fhhf.hulkstore.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import org.dev.fhhf.hulkstore.exception.NotEnoiughStockException;
 import org.dev.fhhf.hulkstore.model.Employee;
 import org.dev.fhhf.hulkstore.model.Movement;
 import org.dev.fhhf.hulkstore.model.Product;
@@ -36,20 +33,14 @@ public class MovementController {
 	private DateFormaterService dateService;
 
 	/**
-	 * Pone loas atributos en el modelo, transactions extrae la información
-	 * detallada de cada movimiento
+	 * Pone los atributos en el modelo
 	 */
 	@GetMapping("/{empId}/all")
 	public String getAllMovements(@PathVariable("empId") int empId, Model model) {
 
 		List<Movement> movements = movementService.findAllMovements();
-		List<List<String>> transactions = new ArrayList<>();
 		
-		for (Movement m : movements) {
-			transactions.add(Arrays.asList(m.getMovedUnits().split(",")));
-		}
-
-		model.addAttribute("transactions", transactions);
+		model.addAttribute("movedUnits", movementService.getMovedUnitsPerMove(movements));
 		model.addAttribute("moves", movements);
 		model.addAttribute("empId", empId);
 		return "moves";
@@ -61,20 +52,13 @@ public class MovementController {
 	 * @param type identifica el tipo de operacion
 	 */
 	@GetMapping("/{empId}/init/{moveType}")
-	public String initAddStock(@PathVariable("empId") int empId, @PathVariable("moveType") String type, Model model) {
+	public String initAddStock(@PathVariable("empId") int empId, 
+							   @PathVariable("moveType") String type, Model model) {
 
 		Date date = dateService.giveFormat(new Date());
 		Employee employee = employeeService.findEmployeeById(empId);
-		Movement movement = new Movement(date, type, employee);
-
-		List<Product> products = new ArrayList<>();
-
-		for (Product p : productService.findAllProducts()) {
-			p.setUnits(0);
-			products.add(p);
-		}
-
-		movement.setProducts(products);
+		List<Product> products = productService.getEmptyListOfProducts();
+		Movement movement = new Movement(date, type, employee, products);
 
 		model.addAttribute("movement", movement);
 		model.addAttribute("empId", empId);
@@ -86,42 +70,10 @@ public class MovementController {
 	 * 
 	 */
 	@PostMapping("/{empId}/{moveType}/Products")
-	public String executeOperation(@PathVariable("empId") int empId, @PathVariable("moveType") String type,
-			Movement movement) {
-
-		List<Product> addedProducts = (List<Product>) movement.getProducts();
-		String movedUnits = "";
-		movement.setProducts(new ArrayList<Product>());
-
-		for (Product aP : addedProducts) {
-			if (aP.getUnits() != 0) {
-				
-				Product pro = productService.findProductById(aP.getId());
-
-				movedUnits = movedUnits
-						.concat(pro.getId() + " _ _ _ " + pro.getUnits() + " _ _ _ " + aP.getUnits() + ",");
-				int units = 0;
-
-				if (type.equals("Input")) {
-					units = pro.getUnits() + aP.getUnits();
-				} else if (type.equals("Output")) {
-					units = pro.getUnits() - aP.getUnits();
-					if (units <= 0) {
-						throw new NotEnoiughStockException(
-								"No hay unidades suficientes para el producto: "+
-								pro.getItem()+" "+pro.getHero()+" "+pro.getBrand()+
-								" Usted solicitó: " + aP.getUnits() + ", hay disponibles: " + pro.getUnits()
-								);
-					}
-				}
-
-				pro.setUnits(units);
-				movement.addProduct(pro);
-			}
-		}
-
-		movement.setMovedUnits(movedUnits);
-
+	public String executeOperation(@PathVariable("empId") int empId, 
+								   @PathVariable("moveType") String type, Movement movement) {
+		
+		productService.getAddedProducts(movement, type);
 		movementService.saveMovement(movement);
 		return "redirect:/move/" + empId + "/all";
 	}

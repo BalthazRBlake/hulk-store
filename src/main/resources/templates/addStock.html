@@ -85,7 +85,8 @@
 										class="form-control form-control-sm" readonly></td>
 									<td><input type="number"
 										th:field="*{products[__${itemStat.index}__].units}"
-										class="form-control form-control-sm"></td>
+										class="form-control form-control-sm"
+										required min="0"></td>
 									<!--td>
 						    <button type="button" class="btn btn-sm btn-outline-danger returnBtn">X</button>
 						    </td-->

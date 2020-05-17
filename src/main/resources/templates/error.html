@@ -18,7 +18,12 @@
 						<span th:text="${error.errorMessage}"></span> 
 					</div>
 				</div>
-				<div class="card-footer"></div>
+				<div class="card-footer">
+				<span th:if="${empId}!=null">
+					<a th:href="@{/emp/{empId}/initMove(empId=${empId})}"
+					   class="btn btn-primary">Regresar</a>
+					   </span>
+				</div>
 			</div>
 		</div>
 	</div>
