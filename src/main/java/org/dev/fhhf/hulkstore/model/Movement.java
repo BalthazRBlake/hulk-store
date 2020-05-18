@@ -107,7 +107,7 @@ public class Movement extends BasicEntity{
 		products.add(product);
 		product.getMovements().add(this);
 	}
-	public void addRemove(Product product) {
+	public void removeProduct(Product product) {
 		products.remove(product);
 		product.getMovements().remove(this);
 	}

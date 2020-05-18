@@ -72,7 +72,7 @@ public class MovementController {
 	@PostMapping("/{empId}/{moveType}/Products")
 	public String executeOperation(@PathVariable("empId") int empId, 
 								   @PathVariable("moveType") String type, Movement movement) {
-		
+
 		productService.getAddedProducts(movement, type);
 		movementService.saveMovement(movement);
 		return "redirect:/move/" + empId + "/all";
