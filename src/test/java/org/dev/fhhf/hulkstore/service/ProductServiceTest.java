@@ -2,7 +2,8 @@ package org.dev.fhhf.hulkstore.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.dev.fhhf.hulkstore.exception.NotEnoughStockException;
+import org.dev.fhhf.hulkstore.model.Employee;
+import org.dev.fhhf.hulkstore.model.Movement;
 import org.dev.fhhf.hulkstore.model.Product;
 import org.dev.fhhf.hulkstore.repository.ProductRepo;
 import org.junit.jupiter.api.DisplayName;
@@ -44,10 +45,38 @@ class ProductServiceTest {
 		final List<Product> actual = productService.getEmptyListOfProducts();
 		
 		assertAll(() -> {
-					for (Product p : actual) {
-						assertEquals(expectedUnits, p.getUnits(), "La lista vacía debe tener 0 unidades por producto");
-					}
-				});
+			for (Product p : actual) {
+				assertEquals(expectedUnits, p.getUnits(), "La lista vacía debe tener 0 unidades por producto");
+			}
+		});
+	}
+	
+	@Test
+	@DisplayName("Sólo debe regresar productos con unidades > 0")
+	void testGetAddedProducts() {
+		
+		Movement move = new Movement(1, "", "Input", new Employee(1, "Juan"));
+		
+		Product product1 = new Product(1, "Suit", "IronMan", "Marvel", 100);
+		Product product2 = new Product(2, "Hammer", "Thor", "Marvel", 0);
+		Product product3 = new Product(3, "Cards", "Joker", "DC", 0);
+		Product initialProduct = new Product(1, "Suit", "IronMan", "Marvel", 20);
+		
+		move.addProduct(product1);
+		move.addProduct(product2);
+		move.addProduct(product3);
+		
+		String type = "Input";
+		
+		when(productRepo.findById(1)).thenReturn(Optional.of(initialProduct));
+		
+		productService.getAddedProducts(move, type);
+		
+		assertAll(
+			() -> assertEquals("1 20 100,", move.getMovedUnits()),
+			() -> assertEquals(120, move.getProducts().get(0).getUnits()),
+			() -> assertEquals(1, move.getProducts().size())
+		);
 	}
 	
 	@Test
@@ -55,8 +84,8 @@ class ProductServiceTest {
 	void testUpdateMovedUnits() throws NoSuchMethodException, SecurityException,
 								IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		
-		Product initialProduct = new Product(1, "Suit", "IronMan", "Marvel", 0);
 		String movedUnits = "";
+		Product initialProduct = new Product(1, "Suit", "IronMan", "Marvel", 0);
 		Product addedProduct = new Product(1, "Suit", "IronMan", "Marvel", 100);
 		
 		Method updateMovedUnits = ProductServiceImpl.class.getDeclaredMethod("updateMovedUnits", Product.class, String.class);
