@@ -58,8 +58,8 @@ class ProductServiceTest {
 		String movedUnits = "";
 		Product addedProduct = new Product(1, "Suit", "IronMan", "Marvel", 100);
 		
-		Method method = ProductServiceImpl.class.getDeclaredMethod("updateMovedUnits", Product.class, String.class);
-		method.setAccessible(true);
+		Method updateMovedUnits = ProductServiceImpl.class.getDeclaredMethod("updateMovedUnits", Product.class, String.class);
+		updateMovedUnits.setAccessible(true);
 		
 		when(productRepo.findById(1)).thenReturn(Optional.of(initialProduct));
 		
@@ -67,12 +67,33 @@ class ProductServiceTest {
 				   				" " + initialProduct.getUnits() +
 				   				" " + addedProduct.getUnits() + ",";
 		
-		final String actualMovedUnits = (String) method.invoke(productService, addedProduct, movedUnits);
+		final String actualMovedUnits = (String) updateMovedUnits.invoke(productService, addedProduct, movedUnits);
 		
 		assertEquals(expected, actualMovedUnits, () -> "Debe concatenar: " + movedUnits + 
 													   + initialProduct.getId() +
 													   " " + initialProduct.getUnits() +
 													   " " + addedProduct.getUnits() + ",");
+	}
+	
+	@Test
+	@DisplayName("Debe retornar el producto con las unidades incrementadas")
+	void testProcessProductInput() throws NoSuchMethodException, SecurityException,
+								   IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		
+		Product initialProduct = new Product(1, "Suit", "IronMan", "Marvel", 20);
+		String type = "Input";
+		Product addedProduct = new Product(1, "Suit", "IronMan", "Marvel", 100);
+		
+		when(productRepo.findById(1)).thenReturn(Optional.of(initialProduct));
+		
+		final int expectedUnits = initialProduct.getUnits() + addedProduct.getUnits();
+		
+		Method processProduct = ProductServiceImpl.class.getDeclaredMethod("processProduct", Product.class, String.class);
+		processProduct.setAccessible(true);
+		
+		final Product product = (Product) processProduct.invoke(productService, addedProduct, type);
+		
+		assertEquals(expectedUnits, product.getUnits(), () -> "Debe sumar las unidades iniciales con las agregadas");
 	}
 
 }
