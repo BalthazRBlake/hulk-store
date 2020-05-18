@@ -14,8 +14,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.Mockito.when;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
@@ -44,6 +47,32 @@ class ProductServiceTest {
 						assertEquals(expectedUnits, p.getUnits(), "La lista vacía debe tener 0 unidades por producto");
 					}
 				});
+	}
+	
+	@Test
+	@DisplayName("Actualizando el registro de movimiento de unidades")
+	void testUpdateMovedUnits() throws NoSuchMethodException, SecurityException,
+								IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		
+		Product initialProduct = new Product(1, "Suit", "IronMan", "Marvel", 0);
+		String movedUnits = "";
+		Product addedProduct = new Product(1, "Suit", "IronMan", "Marvel", 100);
+		
+		Method method = ProductServiceImpl.class.getDeclaredMethod("updateMovedUnits", Product.class, String.class);
+		method.setAccessible(true);
+		
+		when(productRepo.findById(1)).thenReturn(Optional.of(initialProduct));
+		
+		final String expected = movedUnits + initialProduct.getId() +
+				   				" " + initialProduct.getUnits() +
+				   				" " + addedProduct.getUnits() + ",";
+		
+		final String actualMovedUnits = (String) method.invoke(productService, addedProduct, movedUnits);
+		
+		assertEquals(expected, actualMovedUnits, () -> "Debe concatenar: " + movedUnits + 
+													   + initialProduct.getId() +
+													   " " + initialProduct.getUnits() +
+													   " " + addedProduct.getUnits() + ",");
 	}
 
 }

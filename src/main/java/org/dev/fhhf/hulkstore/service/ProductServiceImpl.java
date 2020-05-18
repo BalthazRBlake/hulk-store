@@ -64,7 +64,7 @@ public class ProductServiceImpl implements ProductService{
 			
 			if (addedProduct.getUnits() != 0) {
 				
-				movedUnits = updateMovedUnits(addedProduct.getId(), movedUnits, addedProduct.getUnits());
+				movedUnits = updateMovedUnits(addedProduct, movedUnits);
 				
 				movement.addProduct(processProduct(addedProduct, type));
 			}
@@ -73,10 +73,10 @@ public class ProductServiceImpl implements ProductService{
 		movement.setMovedUnits(movedUnits);
 	}
 	
-	private String updateMovedUnits(int productId, String movedUnits, int addedUnits) {
+	private String updateMovedUnits(Product addedProduct, String movedUnits) {
 		
-		Product product = productRepo.findById(productId).get();
-		return movedUnits.concat(product.getId() + " " + product.getUnits() + " " + addedUnits + ",");
+		Product product = productRepo.findById(addedProduct.getId()).get();
+		return movedUnits.concat(product.getId() + " " + product.getUnits() + " " + addedProduct.getUnits() + ",");
 	}
 	
 	private Product processProduct(Product addedProduct, String type) {
