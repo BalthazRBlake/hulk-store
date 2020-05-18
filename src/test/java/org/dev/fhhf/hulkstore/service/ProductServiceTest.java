@@ -2,6 +2,7 @@ package org.dev.fhhf.hulkstore.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.dev.fhhf.hulkstore.exception.NotEnoughStockException;
 import org.dev.fhhf.hulkstore.model.Product;
 import org.dev.fhhf.hulkstore.repository.ProductRepo;
 import org.junit.jupiter.api.DisplayName;
@@ -80,8 +81,8 @@ class ProductServiceTest {
 	void testProcessProductInput() throws NoSuchMethodException, SecurityException,
 								   IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		
-		Product initialProduct = new Product(1, "Suit", "IronMan", "Marvel", 20);
 		String type = "Input";
+		Product initialProduct = new Product(1, "Suit", "IronMan", "Marvel", 20);
 		Product addedProduct = new Product(1, "Suit", "IronMan", "Marvel", 100);
 		
 		when(productRepo.findById(1)).thenReturn(Optional.of(initialProduct));
@@ -93,7 +94,27 @@ class ProductServiceTest {
 		
 		final Product product = (Product) processProduct.invoke(productService, addedProduct, type);
 		
-		assertEquals(expectedUnits, product.getUnits(), () -> "Debe sumar las unidades iniciales con las agregadas");
+		assertEquals(expectedUnits, product.getUnits(), "Debe sumar las unidades iniciales con las agregadas");
 	}
 
+	@Test
+	@DisplayName("Debe retornar el producto con las unidades decrementadas")
+	void testProcessProductOutput() throws NoSuchMethodException, SecurityException,
+								   IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		
+		String type = "Output";
+		Product initialProduct = new Product(1, "Suit", "IronMan", "Marvel", 120);		
+		Product addedProduct = new Product(1, "Suit", "IronMan", "Marvel", 10);
+		
+		when(productRepo.findById(1)).thenReturn(Optional.of(initialProduct));
+		
+		final int expectedUnits = initialProduct.getUnits() - addedProduct.getUnits();
+		
+		Method processProduct = ProductServiceImpl.class.getDeclaredMethod("processProduct", Product.class, String.class);
+		processProduct.setAccessible(true);
+		
+		final Product product = (Product) processProduct.invoke(productService, addedProduct, type);
+		
+		assertEquals(expectedUnits, product.getUnits(), "Debe restar las unidades vendidas de las iniciales"); 
+	}
 }
